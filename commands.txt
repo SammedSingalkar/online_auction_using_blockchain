@@ -1,0 +1,1 @@
+solcjs --abi --bin contracts/Auction.sol - to create abi and bin file

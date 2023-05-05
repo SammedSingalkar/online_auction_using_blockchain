@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../public/css/custom.css">
+    <title>Notifications</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <style>
+    .under {
+        display: inline-block;
+    }
+    div.main {
+        max-height: 2000px;
+        min-height: 745px;
+        padding-left: 250px;
+        background-image: url(../../public/images/other/img2.jpg);
+    }
+
+     /* Custom CSS */
+     .delete-button {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+      }
+      .delete-button:hover {
+        transform: scale(1.2);
+      }
+
+      .side {
+    width: 220px;
+    background-color: #000036;
+    height: 100%;
+    position: fixed;
+    padding: 2vh;
+    color: white;
+    box-shadow: 0 30px 40px 0px rgba(62, 62, 201, .8);
+}
+</style>
+
+</head>  
+<body>
+    <div class="side">
+        <div id="bo">
+            <div class="under">
+                <img src="../../public/images/other/logo2.png" alt="" height="60px" width="68px">
+            </div>
+            <div class="under">
+                <a href="/">Easy bid</a>
+            </div>
+        </div>
+        <a href="/"><i class="fa fa-home ele" id="non-active">&nbsp;&nbsp;Home</i></a>
+
+        <h2 style="padding:2vh; margin-top:1vh; color:rgb(241, 42, 11);">User Account</h2>
+        <a href="/profile"><i class="fa fa-user ele" id="non-active">&nbsp;&nbsp;Profile</i></a>
+        <a href="/wishlist"><i class="fa fa-heart-o ele" id="non-active">&nbsp;&nbsp;Wishlist</i></a>
+        <a href="/purchases"><i class="fa fa-money ele" id="non-active">&nbsp;&nbsp;Purchases</i></a>
+        <a href="/bid"><i class="fa fa-gavel ele" id="non-active">&nbsp;&nbsp;Bids</i></a>
+        <a href="/notify"><i class="fa fa-bell ele" id="active">&nbsp;&nbsp;Notifications</i></a>
+
+        <h2 style="padding:2vh; margin-top:2vh; color:rgb(241, 42, 11)">Seller Section</h2>
+        <a href="/list_product"><i class="fa fa-archive ele" id="non-active">&nbsp;&nbsp; List Your Product</i></a>
+        <a href="/selling_history"><i class="fa fa-handshake-o ele" id="non-active">&nbsp;&nbsp;Selling
+                History</i></a>
+    </div>
+
+    <div class="main">
+        <h3 style="padding-top:2vh; margin-left:4vh; color:white">Notifications</h3>
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-4">Notifications</h1>
+            <div class="flex flex-col space-y-4">
+              <% result.forEach((element) => { %>
+                <div class="bg-white shadow rounded-md p-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                      <% if (element.type==="Success"){%>
+                        <div class="bg-green-500 rounded-full h-8 w-8 flex items-center justify-center mr-4">
+                          <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
+                      <%} 
+                      else if (element.type==="Warning"){%>
+                        <div class="bg-yellow-500 rounded-full h-8 w-8 flex items-center justify-center mr-4">
+                          <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                          </svg>
+                        </div>
+                      <%} else if (element.type==="Error"){%>
+                        <div class="bg-red-500 rounded-full h-8 w-8 flex items-center justify-center mr-4">
+                          <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M12 4v6m0 0v6m0-6h6m-6 0H6"></path>
+                          </svg>
+                        </div>
+                      <%} else{%>
+                        <div class="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center mr-4">
+                          <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                          </svg>
+                        </div>
+                      <%}%>
+                      <div class="text-sm">
+                        <p class="font-bold"><%= element.type %></p>
+                        <p class="text-gray-500"><%= element.Message %></p>
+                      </div>
+                    </div>
+                    <!-- <button class="text-gray-500 hover:text-red-500" onclick="deleteNotification()">Delete</button> -->
+                    <form action="/notify/<%=element.Noti_Id%>" method="post">
+                    <button type="submit" class="text-gray-500 hover:text-red-500">Delete</button>
+                  </form>
+                  </div>
+                <% }) %>
+        <!-- <script>
+          // Handle delete button clicks
+          const deleteButtons = document.querySelectorAll('.delete-button');
+          deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              button.parentElement.remove();
+            });
+          });
+        </script> -->
+</body>
+
+</html>
