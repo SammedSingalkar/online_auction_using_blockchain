@@ -6,140 +6,18 @@ var mysql = require("mysql");
 const session = require("express-session");
 const nodemailer = require("nodemailer");
 let alert = require("alert");
-const fs = require('fs');
-const solc = require('solc');
-const fileUpload = require('express-fileupload');
-require('dotenv').config();
-const Web3 = require('web3');
-const web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545')); //replace with your Infura project ID
-
-
-
+const fs = require("fs");
+const solc = require("solc");
+const fileUpload = require("express-fileupload");
+require("dotenv").config();
+const Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545")); //replace with your Infura project ID
 
 // const web3 = new Web3(Web3.givenProvider || 'https://sepolia.infura.io/v3/');
 // const web3 = new Web3(Web3.currentProvider);
 // var Contract = require('web3-eth-contract');
 // set provider for all later instances to use
 // const web3 = Contract.setProvider('https://sepolia.infura.io/v3/7dc1dad5e7174ab7886f46499f10da4d');
-
-
-
-
-// //working code
-const contractABI = JSON.parse(fs.readFileSync('./contracts_Auction_sol_SimpleAuction.abi'));
-const contractBytecode = fs.readFileSync('./contracts_Auction_sol_SimpleAuction.bin').toString();
-web3.eth.getAccounts()
-  .then(accounts => {
-    const contract = new web3.eth.Contract(contractABI);
-    return contract.deploy({
-      data: contractBytecode,
-      arguments: [6, accounts[0]] // Pass the first account in Ganache as the beneficiary
-    })
-    .send({
-      from: accounts[0],
-      gas: 1500000,
-      gasPrice: '10000000000'
-    })
-  })
-  .then(contractInstance => {
-    console.log('Contract deployed at address:', contractInstance.options.address);
-    const filePath = 'public/smart_contract_address/1.txt'
-    const fileContent = contractInstance.options.address
-    fs.writeFile(filePath, fileContent, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log('File created and content written successfully!');
-    });
-  });
-
-
-  const filePath = 'public/smart_contract_address/1.txt';
-
-  let fileContent;
-
-  setTimeout(() => {
-    fileContent = fs.readFileSync(filePath, 'utf-8');
-    console.log(fileContent);
-  }, 4000);
-  
-  // Access fileContent here
-  setTimeout(() => {
-  // console.log(fileContent);
-const contractAddress = fileContent; // replace with your contract address
-// const contractAddress = "0xDC131271459873E2663DA6526ef8eaf55Adf227C"; // replace with your contract address
-
-
-const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-const value = web3.utils.toWei('1', 'ether'); // set the bid value to 1 ETH
-const account = '0x62a4B352E68264819afFf61229aBC768c95E3245'; // replace with the bidder's account address
-contract.methods.bid().send({from: account, value: value})
-  .on('receipt', receipt => {
-    console.log('Bid successful:', receipt);
-  })
-  .on('error', error => {
-    console.error('Bid failed:', error);
-  });
-
-
-  setTimeout(() => {
-  const contractAddress = fileContent; // replace with your contract address
-  const contract = new web3.eth.Contract(contractABI, contractAddress);
-  
-  const value = web3.utils.toWei('2', 'ether'); // set the bid value to 1 ETH
-  const account = '0xDC131271459873E2663DA6526ef8eaf55Adf227C'; // replace with the bidder's account address
-  contract.methods.bid().send({from: account, value: value})
-    .on('receipt', receipt => {
-      console.log('Bid successful:', receipt);
-    })
-    .on('error', error => {
-      console.error('Bid failed:', error);
-    });
-  }, 1000);
-
-  
-  // contract.methods.withdraw().send({from: account})
-  // .on('receipt', receipt => {
-  //   console.log('Withdrawal successful:', receipt);
-  // })
-  // .on('error', error => {
-  //   console.error('Withdrawal failed:', error);
-  // });
-
-  setTimeout(() => {
-      contract.methods.withdraw().send({from: account})
-  .on('receipt', receipt => {
-    console.log('Withdrawal successful:', receipt);
-  })
-  .on('error', error => {
-    console.error('Withdrawal failed:', error);
-  });
-  contract.methods.auctionEnd().send({from: account})
-  .on('receipt', receipt => {
-    console.log('Auction ended:', receipt);
-  })
-  .on('error', error => {
-    console.error('Auction end failed:', error);
-  });
-}, 3000);
-
-
-  // web3.eth.getBalance(account)
-  // .then(balance => {
-  //   console.log('Account balance:', web3.utils.fromWei(balance, 'ether'), 'ETH');
-  // })
-  // .catch(error => {
-  //   console.error('Failed to get balance:', error);
-  // });
-
-}, 4000);
-
- 
-  
-
-
 
 var router = express.Router();
 
@@ -152,7 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 // app.use('/api',router)
 app.use("/", router);
 router.use(fileUpload());
-
 
 var con = mysql.createConnection({
   host: process.env.HOST,
@@ -177,9 +54,6 @@ router.use(
     }, // Session expires in 100 hour
   })
 );
-
-
-
 
 router
   .route("/register")
@@ -214,7 +88,7 @@ router
 
     const folderPath = `public/images/user`;
 
-    const buffer1 = Buffer.from(profile, 'base64');
+    const buffer1 = Buffer.from(profile, "base64");
     fs.writeFileSync(`${folderPath}/${userid}.jpg`, buffer1);
 
     con.query(sql, values, (err, result) => {
@@ -246,7 +120,7 @@ router
           var email = result[0];
           req.session.user = email;
           req.session.isLoggedIn = true;
-          
+
           res.redirect("/profile");
         } else {
           res.render("signin", { message: "password is wrong" });
@@ -282,7 +156,6 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/about").get((req, res) => {
-  
   res.render("about_us");
 });
 
@@ -311,10 +184,9 @@ router.route("/all/categories").get((req, res) => {
   );
 });
 
-router.route("/category_prodcuts")
-.get((req,res)=>{
-  res.render('category_detail')
-})
+router.route("/category_prodcuts").get((req, res) => {
+  res.render("category_detail");
+});
 
 router
   .route("/profile")
@@ -403,7 +275,7 @@ router.route("/bid").get((req, res) => {
       [user_id],
       (err, result) => {
         if (err) throw err;
-        res.render("user_content/bid",{result:result});
+        res.render("user_content/bid", { result: result });
       }
     );
   }
@@ -494,11 +366,18 @@ router
       const auction_end = `${year1}-${month1}-${day1} ${hours1}:${minutes1}:${seconds1}`;
       const category = req.body.category;
 
-      const img1 = req.files.product_image1 ? req.files.product_image1.data : null;
-      const img2 = req.files.product_image2 ? req.files.product_image2.data : null;
-      const img3 = req.files.product_image3 ? req.files.product_image3.data : null;
-      const img4 = req.files.product_image4 ? req.files.product_image4.data : null;
-
+      const img1 = req.files.product_image1
+        ? req.files.product_image1.data
+        : null;
+      const img2 = req.files.product_image2
+        ? req.files.product_image2.data
+        : null;
+      const img3 = req.files.product_image3
+        ? req.files.product_image3.data
+        : null;
+      const img4 = req.files.product_image4
+        ? req.files.product_image4.data
+        : null;
 
       const sql = `INSERT INTO item (Item_Id, Item_Name, Description, Starting_Bid_Price, Status, Curr_Bid_Price, Seller_Id, Auction_Start_Time, Auction_End_Time, Category) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -516,21 +395,18 @@ router
         category,
       ];
       // Create a folder with the product name
-const folderPath = `public/images/product_images/${product_name}`;
-fs.mkdirSync(folderPath, { recursive: true });
+      const folderPath = `public/images/product_images/${product_name}`;
+      fs.mkdirSync(folderPath, { recursive: true });
 
+      const buffer1 = Buffer.from(img1, "base64");
+      const buffer2 = Buffer.from(img2, "base64");
+      const buffer3 = Buffer.from(img3, "base64");
+      const buffer4 = Buffer.from(img4, "base64");
 
-const buffer1 = Buffer.from(img1, 'base64');
-const buffer2 = Buffer.from(img2, 'base64');
-const buffer3 = Buffer.from(img3, 'base64');
-const buffer4 = Buffer.from(img4, 'base64');
-
-fs.writeFileSync(`${folderPath}/1.jpg`, buffer1);
-fs.writeFileSync(`${folderPath}/2.jpg`, buffer2);
-fs.writeFileSync(`${folderPath}/3.jpg`, buffer3);
-fs.writeFileSync(`${folderPath}/4.jpg`, buffer4);
-
-
+      fs.writeFileSync(`${folderPath}/1.jpg`, buffer1);
+      fs.writeFileSync(`${folderPath}/2.jpg`, buffer2);
+      fs.writeFileSync(`${folderPath}/3.jpg`, buffer3);
+      fs.writeFileSync(`${folderPath}/4.jpg`, buffer4);
 
       con.query(sql, values, (err, result) => {
         if (err) throw err;
@@ -561,29 +437,52 @@ router.route("/purchases").get((req, res) => {
   res.render("user_content/purchases");
 });
 
-router.route("/product_detail/:id").get((req, res) => {
-  if (!req.session.isLoggedIn) {
-    res.redirect("/signin");
-  } else {
-    const id = req.params.id;
-    con.query("SELECT * FROM item where Item_Id = ?",[id], (err, result) => {
-      if (err) throw err;
-    res.render("product_detail",{result:result});
-    })
-  }
-})
-.post((req, res) => {
-  if (!req.session.isLoggedIn) {
-    res.redirect("/signin");
-  } else {
-    var id = req.params.id;
-    var amount = req.body.amount;
-    var user_id = req.session.user.User_Id;
-  }
-});
+router
+  .route("/product_detail/:id")
+  .get((req, res) => {
+    if (!req.session.isLoggedIn) {
+      res.redirect("/signin");
+    } else {
+      const id = req.params.id;
+      var user_id = req.session.user.User_Id;
+      con.query("SELECT * FROM item where Item_Id = ?", [id], (err, result) => {
+        if (err) throw err;
+        const filePath = "public/smart_contract_address/" + id + ".txt";
+        var product_name = result[0].Item_Name
+        var stat = result[0].Status;
+        if (result.length > 0) {
+          var now = new Date();
+          var Auction_end_time = result[0].Auction_End_Time;
+          var Auction_start_time = result[0].Starting_Bid_Price;
+          const endTimestamp = new Date(Auction_end_time).getTime();
+          const startTimestamp = new Date(Auction_start_time).getTime();
+          
+          const timeDiffInSeconds = Math.floor((endTimestamp - startTimestamp) / 1000);
+          console.log(`Time difference in seconds: ${timeDiffInSeconds}`);
+          
 
-router.route("/addwishlist/:id")
-.post((req, res) => {
+
+        } else {
+          // Handle the case where result is empty
+          // res.render("product_detail", { result: [] });
+          res.status(404).send("Product does not exist");
+        }
+
+        // res.render("product_detail", { result: result });
+      });
+    }
+  })
+  .post((req, res) => {
+    if (!req.session.isLoggedIn) {
+      res.redirect("/signin");
+    } else {
+      var id = req.params.id;
+      var amount = req.body.amount;
+      var user_id = req.session.user.User_Id;
+    }
+  });
+
+router.route("/addwishlist/:id").post((req, res) => {
   if (!req.session.isLoggedIn) {
     res.redirect("/signin");
   } else {
@@ -605,17 +504,16 @@ router.route("/addwishlist/:id")
           con.query(sql, values, (err, result) => {
             if (err) throw err;
             alert("Data inserted successfully");
-            res.redirect('/product_detail/'+item_id);
+            res.redirect("/product_detail/" + item_id);
           });
         } else {
           alert("Already present in watchlist");
-          res.redirect('/product_detail/'+item_id);
+          res.redirect("/product_detail/" + item_id);
         }
       }
     );
   }
 });
-
 
 router.route("/logout").get((req, res) => {
   req.session.destroy((err) => {
