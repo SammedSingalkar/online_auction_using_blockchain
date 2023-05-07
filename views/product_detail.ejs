@@ -619,12 +619,34 @@
                     const seconds = Math.floor(remainingTimeInSeconds % 60);
                     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                     timerElement.textContent = hours + "  :  " + minutes + "  :  " + seconds;
+                    // location.reload();
                 }
             }
 
             // Update the timer every second
             const intervalId = setInterval(updateTimer, 1000);
             updateTimer(); // Call once immediately to avoid initial delay
+
+         
+
+
+            function check(){
+            const targetTime = "<%=element.Auction_Start_Time%>";
+            const targetTimeDate = new Date(targetTime);
+            targetTimeDate.setSeconds(targetTimeDate.getSeconds() + 1);
+            const targetTimePlus2Seconds = targetTimeDate.toISOString().replace('T', ' ').slice(0, 19);
+
+            const now = new Date();
+                const currentTime = now.toISOString().replace('T', ' ').slice(0, 19);
+
+                if (currentTime === targetTimePlus2Seconds) {
+                    location.reload();
+                }
+            }
+
+            const checktime = setInterval(check, 1000);
+            check(); // Call once immediately to avoid initial delay
+
         </script>
         <% }) %>
 </body>

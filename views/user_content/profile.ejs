@@ -7,7 +7,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../public/css/custom.css">
-    <script src="../../public/script.js"></script>
     <title>profile</title>
 
     
@@ -140,7 +139,6 @@
         </div>
         <div class="container1">
             <% result.forEach((element) => { %>
-                <form action="/profile" method="post">
             <div class="form">
                 <label for="firstname">Name:</label>
                 <input type="text" Name="name" class="form1" id="name" placeholder="Enter Your Name"
@@ -177,8 +175,7 @@
                 <input type="password" Name="password" class="form1" id="password" placeholder="Enter Your password"
                     value="<%=element.Password%>" readonly>
             </div>
-            <button type="submit" id="form_button">Edit Profile</button>
-        </form>
+            <button type="submit" id="form_button" onclick="location.href='/Update_user_profile'">Edit Profile</button>
             <% }); %>
         </div>
         

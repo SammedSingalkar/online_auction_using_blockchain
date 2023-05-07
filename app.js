@@ -65,7 +65,8 @@ contract.methods.bid().send({from: account, value: value})
   const account = '0xDC131271459873E2663DA6526ef8eaf55Adf227C'; // replace with the bidder's account address
   contract.methods.bid().send({from: account, value: value})
     .on('receipt', receipt => {
-      console.log('Bid successful:', receipt);
+      // console.log('Bid successf2ul:', receipt);
+      console.log('Bid successful. Transaction hash:', receipt.transactionHash);
     })
     .on('error', error => {
       console.error('Bid failed:', error);
