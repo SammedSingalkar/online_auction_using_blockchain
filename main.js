@@ -133,7 +133,7 @@ router
 
 router.route("/").get((req, res) => {
   if (!req.session.isLoggedIn) {
-    con.query("SELECT * FROM item ", (err, result) => {
+    con.query("SELECT * FROM item WHERE Status LIKE 'Active'", (err, result) => {
       if (err) throw err;
       res.render("index", {
         msg: "Login",
@@ -143,12 +143,12 @@ router.route("/").get((req, res) => {
       });
     });
   } else {
-    con.query("SELECT * FROM item ", (err, result) => {
+    con.query("SELECT * FROM item WHERE Status LIKE 'Active'", (err, result) => {
       if (err) throw err;
       res.render("index", {
-        msg: "Logout",
-        link: "/logout",
-        link1: "/list_product",
+        msg: "Login",
+        link: "/signin",
+        link1: "/signin",
         result: result,
       });
     });
@@ -468,53 +468,55 @@ router
 
               if (now >= end_time) {
                 var s = result1[0].Status;
-                if (s != "Sold" && s!="Expired")
-                {
-                if (result1.length > 0) {
-                  const filePath = "public/smart_contract_address/" + id + ".txt";
-                  // let fileContent;
-                  const contractAddress = fs.readFileSync(filePath, "utf-8");
-                  const contractABI = JSON.parse(
-                    fs.readFileSync("./contracts_Auction_sol_SimpleAuction.abi")
-                  );
-                  const contract = new web3.eth.Contract(
-                    contractABI,
-                    contractAddress
-                  );
-                  const account = '0x8FbFFAe6cCF561fd8B121EC1D4e6BED74CAc1051';
-                  contract.methods.auctionEnd().send({from: account})
-                  .on('receipt', receipt => {
-                    console.log('Auction ended:', receipt);
-                  })
-                  .on('error', error => {
-                    console.error('Auction end failed:', error);
-                  });
+                if (s != "Sold" && s != "Expired") {
+                  if (result1.length > 0) {
+                    const filePath =
+                      "public/smart_contract_address/" + id + ".txt";
+                    // let fileContent;
+                    const contractAddress = fs.readFileSync(filePath, "utf-8");
+                    const contractABI = JSON.parse(
+                      fs.readFileSync(
+                        "./contracts_Auction_sol_SimpleAuction.abi"
+                      )
+                    );
+                    const contract = new web3.eth.Contract(
+                      contractABI,
+                      contractAddress
+                    );
+                    const account =
+                      "0x8FbFFAe6cCF561fd8B121EC1D4e6BED74CAc1051";
+                    contract.methods
+                      .auctionEnd()
+                      .send({ from: account })
+                      .on("receipt", (receipt) => {
+                        console.log("Auction ended:", receipt);
+                      })
+                      .on("error", (error) => {
+                        console.error("Auction end failed:", error);
+                      });
 
-                  var status = "Sold";
-                  con.query(
-                    "UPDATE item SET Status = ? WHERE Item_Id  = ?",
-                    [status, id],
-                    (error, results, fields) => {
-                      if (error) console.error(error);
-                    }
-                  );
+                    var status = "Sold";
+                    con.query(
+                      "UPDATE item SET Status = ? WHERE Item_Id  = ?",
+                      [status, id],
+                      (error, results, fields) => {
+                        if (error) console.error(error);
+                      }
+                    );
+                  } else {
+                    var status = "Expired";
+                    con.query(
+                      "UPDATE item SET Status = ? WHERE Item_Id  = ?",
+                      [status, id],
+                      (error, results, fields) => {
+                        if (error) console.error(error);
+                      }
+                    );
+                  }
                 } else {
-                  var status = "Expired";
-                  con.query(
-                    "UPDATE item SET Status = ? WHERE Item_Id  = ?",
-                    [status, id],
-                    (error, results, fields) => {
-                      if (error) console.error(error);
-                    }
-                  );
+                  console.log("Payment Already done");
                 }
-              }
-              else{
-                console.log("Payment Already done")
-              }
-              }
-              
-              else if (now <= end_time && now >= start_time) {
+              } else if (now <= end_time && now >= start_time) {
                 var status = "Active";
                 con.query(
                   "UPDATE item SET Status = ? WHERE Item_Id  = ?",
@@ -571,17 +573,14 @@ router
                   } else {
                     console.log(`File '${filePath}' exists.`);
                   }
-                    //end of smart contract deployement
+                  //end of smart contract deployement
                 });
-
-              }  
+              }
               // Render the product detail page after updating the status
               res.render("product_detail", { result: result });
             }
           );
-        } 
-       
-        else {
+        } else {
           // Handle the case where result is empty
           // res.render("product_detail", { result: [] });
           res.status(404).send("Product does not exist");
@@ -640,7 +639,10 @@ router
                 .send({ from: account, value: value })
                 .on("receipt", (receipt) => {
                   // console.log("Bid successful:", receipt);
-                  console.log('Bid successful. Transaction hash:', receipt.transactionHash); //0xa9c291845022c53ad3473aa8fc9f87a30c414960fd1e6248d51c16305382176d
+                  console.log(
+                    "Bid successful. Transaction hash:",
+                    receipt.transactionHash
+                  ); //0xa9c291845022c53ad3473aa8fc9f87a30c414960fd1e6248d51c16305382176d
                   con.query(
                     "UPDATE item SET Curr_Bid_Price = ? WHERE Item_Id  = ?",
                     [amount, id],
@@ -717,9 +719,8 @@ router
             }
           } else if (start_time > now) {
             alert("bidding is Not Started Yet");
-            res.redirect("/product_detail/" + id);    
-          } 
-          else {
+            res.redirect("/product_detail/" + id);
+          } else {
             alert("bidding is Expired");
             res.redirect("/product_detail/" + id);
           }
@@ -761,35 +762,78 @@ router.route("/addwishlist/:id").post((req, res) => {
   }
 });
 
-router.route('/Update_user_profile')
-.get((req,res)=>{
-  if (!req.session.isLoggedIn) {
-    res.redirect("/signin");
-  }
-  else{
-    const user_id = req.session.user.User_Id;
-    con.query("SELECT * FROM user where User_Id = ?", [user_id], (err, result) => {
-      if (err) throw err;
-      res.render('user_content/Update_user_profile',{result:result})
-    })
-  }
-})
-.post((req,res)=>{
-  if (!req.session.isLoggedIn) {
-    res.redirect("/signin");
-  }
-  else{
-    // console.log("HI")
-    const profile = req.files.profile_img ? req.files.profile_img.data : null;
-    const folderPath = `public/images/user`;
-    const userid = req.session.user.User_Id;
+router
+  .route("/Update_user_profile")
+  .get((req, res) => {
+    if (!req.session.isLoggedIn) {
+      res.redirect("/signin");
+    } else {
+      const user_id = req.session.user.User_Id;
+      con.query(
+        "SELECT * FROM user where User_Id = ?",
+        [user_id],
+        (err, result) => {
+          if (err) throw err;
+          res.render("user_content/Update_user_profile", { result: result });
+        }
+      );
+    }
+  })
+  .post((req, res) => {
+    if (!req.session.isLoggedIn) {
+      res.redirect("/signin");
+    } else {
+      const profile = req.files?.profile_img?.data;
+const folderPath = `public/images/user`;
+const userid = req.session.user.User_Id;
 
-      const buffer1 = Buffer.from(profile, "base64");
-      fs.writeFileSync(`${folderPath}/${userid}.jpg`, buffer1);
-      res.redirect("/Update_user_profile");
-  }
-});
-
+if (profile) {
+  const buffer1 = Buffer.from(profile, "base64");
+  fs.writeFileSync(`${folderPath}/${userid}.jpg`, buffer1);
+}
+  
+      const name = req.body.name;
+      const aadhar = req.body.aadhar;
+      const mobile = req.body.mobile;
+      const dob = req.body.date;
+      const address = req.body.address;
+      const password = req.body.password;
+  
+      // Hash the password before storing it in the database
+      // const hashedPassword = bcrypt.hashSync(password, 10);
+  
+      const sql = `UPDATE user 
+                   SET Name = ?, 
+                       Aadhar_Card = ?, 
+                       Mobile_No = ?, 
+                       DOB = ?, 
+                       Password = ?, 
+                       Shipping_Add = ? 
+                   WHERE User_Id = ?`;
+  
+      const values = [
+        name,
+        aadhar,
+        mobile,
+        dob,
+        password,
+        address,
+        userid,
+      ];
+  
+      // Sanitize user input using placeholders
+      con.query(sql, values, (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error updating profile");
+        } else {
+          alert("Profile Updated Sucessfully")
+          res.redirect("/profile");
+        }
+      });
+      // res.redirect("/Update_user_profile");
+    }
+  });
 
 router.route("/logout").get((req, res) => {
   req.session.destroy((err) => {

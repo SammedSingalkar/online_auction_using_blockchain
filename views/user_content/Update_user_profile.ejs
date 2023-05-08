@@ -48,6 +48,7 @@
                         <div class="content-panel">
                             <h2 class="title">Profile<span class="pro-label label label-warning">PRO</span></h2>
                             <div class="form-horizontal">
+                                <form action="/Update_user_profile" method="post" enctype="multipart/form-data">
                                 <fieldset class="fieldset">
                                     <h3 class="fieldset-title">Personal Info</h3>
                                     <div class="form-group avatar">
@@ -56,37 +57,37 @@
                                             src="../../public/images/user/<%=element.User_Id%>.jpg" alt="Preview Image" id="preview-img"
                                             alt="Not Found">
                                         </figure>
-                                        <form action="/Update_user_profile" method="post" enctype="multipart/form-data">
+                                        <!-- <form action="/Update_user_profile" method="post" enctype="multipart/form-data"> -->
                                             <div class="form-inline col-md-10 col-sm-9 col-xs-12">
                                               <input type="file" id="profile-img" name="profile_img" class="file-uploader pull-left" accept="image/*" >
-                                              <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button>
+                                              <!-- <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button> -->
                                             </div>
-                                          </form> 
+                                          <!-- </form>  -->
                                                                                    
                                         </div>
                                     <div class="form-group">
                                         <label class="col-md-2 col-sm-3 col-xs-12 control-label">User Name</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="<%=element.Name%>">
+                                            <input type="text" class="form-control" name="name" value="<%=element.Name%>" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 col-sm-3 col-xs-12 control-label">Addhar Card</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="<%=element.Aadhar_Card%>">
+                                            <input type="text" class="form-control" name="aadhar" value="<%=element.Aadhar_Card%>" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 col-sm-3 col-xs-12 control-label">Password</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="<%=element.Password%>">
+                                            <input type="text" class="form-control" name="password" value="<%=element.Password%>" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 col-sm-3 col-xs-12 control-label">Date of Birth</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
                                             <input type="date" class="form-control"
-                                                value="<%=element.DOB.toISOString().substr(0, 10)%>">
+                                               name="date" value="<%=element.DOB.toISOString().substr(0, 10)%>" required>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -95,7 +96,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Mobile Number</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="email" class="form-control" value="<%=element.Mobile_No%>">
+                                            <input type="text" class="form-control" name="mobile" value="<%=element.Mobile_No%>"  required>
                                             <p class="help-block">Remember you can chaneg mobile number only once</p>
                                         </div>
                                     </div>
@@ -103,7 +104,7 @@
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Shipping
                                             Address</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="<%=element.Shipping_Add%>">
+                                            <input type="text" class="form-control" value="<%=element.Shipping_Add%>" name="address" required>
                                             <p class="help-block">Your Shipping and collection address</p>
                                         </div>
                                     </div>
@@ -111,8 +112,8 @@
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Crypto Account
                                             Address</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="url" class="form-control" value="">
-                                            <p class="help-block">Don't Worry Your account number will be safe</p>
+                                            <input type="url" class="form-control" name="account" value="">
+                                            <p class="help-block">Don't Worry Your account address will be safe</p>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -123,6 +124,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </section>
