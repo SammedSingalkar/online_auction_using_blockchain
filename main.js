@@ -638,8 +638,6 @@ router
               const filePath = "public/smart_contract_address/" + id + ".txt";
               let fileContent;
               const contractAddress = fs.readFileSync(filePath, "utf-8");
-              // console.log(fileContent);
-              // const contractAddress = fileContent; // replace with your contract address
               const contractABI = JSON.parse(
                 fs.readFileSync("./contracts_Auction_sol_SimpleAuction.abi")
               );
@@ -650,85 +648,68 @@ router
                 contractABI,
                 contractAddress
               );
-
-              const value = web3.utils.toWei(amount, "ether"); // set the bid value to 1 ETH
-              const account = user_address; // replace with the bidder's account address
-              contract.methods
-                .bid()
-                .send({ from: account, value: value })
+            
+              const value = web3.utils.toWei(amount, "ether");
+              const account = user_address;
+              
+              contract.methods.bid().send({ from: account, value: value })
                 .on("receipt", (receipt) => {
-                  // console.log("Bid successful:", receipt);
-                  console.log(
-                    "Bid successful. Transaction hash:",
-                    receipt.transactionHash
-                  ); //0xa9c291845022c53ad3473aa8fc9f87a30c414960fd1e6248d51c16305382176d
-                  con.query(
-                    "UPDATE item SET Curr_Bid_Price = ? WHERE Item_Id  = ?",
-                    [amount, id],
-                    (error, results, fields) => {
-                      if (error) {
-                        console.error(error);
-                      } else {
-                        alert("Bid is placed successfully");
-                        contract.methods
-                          .withdraw()
-                          .send({ from: account })
-                          .on("receipt", (receipt) => {
-                            console.log("Withdrawal successful:", receipt);
-                          })
-                          .on("error", (error) => {
-                            console.error("Withdrawal failed:", error);
-                          });
-
-                        con.query(
-                          "SELECT bid_ID FROM bid ORDER BY bid_ID DESC LIMIT 1;",
-                          (err, result) => {
-                            if (err) throw err;
-                            let last_Id = result[0].bid_ID;
-                            let next_Id = last_Id + 1;
-                            const sql = `INSERT INTO Bid (bid_ID, buyer_ID, seller_ID, item_Id, Bid_Amount, Product_Status, Date_Time, Transaction_Hash) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-                            const now = new Date();
-                            const year = now.getFullYear();
-                            const month = String(now.getMonth() + 1).padStart(
-                              2,
-                              "0"
-                            );
-                            const day = String(now.getDate()).padStart(2, "0");
-                            const hour = String(now.getHours()).padStart(
-                              2,
-                              "0"
-                            );
-                            const minute = String(now.getMinutes()).padStart(
-                              2,
-                              "0"
-                            );
-                            const second = String(now.getSeconds()).padStart(
-                              2,
-                              "0"
-                            );
-                            const dateTimeString = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-                            const values = [
-                              next_Id,
-                              user_id,
-                              seller_id,
-                              id,
-                              amount,
-                              status,
-                              dateTimeString,
-                              receipt.transactionHash,
-                            ];
-                            con.query(sql, values, (err, result) => {
-                              if (err) throw err;
-                              alert("Data inserted successfully");
-                              res.redirect("/product_detail/" + id);
+                  console.log("Bid successful. Transaction hash:", receipt.transactionHash);
+                  con.query("UPDATE item SET Curr_Bid_Price = ? WHERE Item_Id  = ?", [amount, id], (error, results, fields) => {
+                    if (error) {
+                      console.error(error);
+                    } else {
+                      alert("Bid is placed successfully");
+                      con.query("SELECT * from bid where item_Id = ? order by bid_ID DESC", [id], (err, result3) => {
+                        if (err) throw err;
+                        if (result3.length > 0) {
+                        const pre_id = result3[0].buyer_ID;
+                        con.query("SELECT * from user where User_Id = ?", [pre_id], (err, result4) => {
+                          
+                            const pre_address = result4[0].accound_address;
+                            contract.methods.withdraw().send({ from: pre_address })
+                              .on("receipt", (receipt) => {
+                                console.log("Withdrawal successful:", receipt);
+                              })
+                              .on("error", (error) => {
+                                console.error("Withdrawal failed:", error);
+                              });
                             });
                           }
-                        );
-                        // res.redirect("/product_detail/" + id);
-                      }
+                      });
+            
+                      con.query("SELECT bid_ID FROM bid ORDER BY bid_ID DESC LIMIT 1;", (err, result) => {
+                        if (err) throw err;
+                        let last_Id = result[0].bid_ID;
+                        let next_Id = last_Id + 1;
+                        const sql = `INSERT INTO Bid (bid_ID, buyer_ID, seller_ID, item_Id, Bid_Amount, Product_Status, Date_Time, Transaction_Hash) 
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const month = String(now.getMonth() + 1).padStart(2, "0");
+                        const day = String(now.getDate()).padStart(2, "0");
+                        const hour = String(now.getHours()).padStart(2, "0");
+                        const minute = String(now.getMinutes()).padStart(2, "0");
+                        const second = String(now.getSeconds()).padStart(2, "0");
+                        const dateTimeString = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+                        const values = [
+                          next_Id,
+                          user_id,
+                          seller_id,
+                          id,
+                          amount,
+                          status,
+                          dateTimeString,
+                          receipt.transactionHash,
+                        ];
+                        con.query(sql, values, (err, result) => {
+                          if (err) throw err;
+                          alert("Data inserted successfully");
+                          res.redirect("/product_detail/" + id);
+                        });
+                      });
                     }
-                  );
+                  });
                 })
                 .on("error", (error) => {
                   console.error("Bid failed:", error);
@@ -737,7 +718,10 @@ router
             } else {
               alert("Enter bigger amount than current amount");
             }
-          } else if (start_time > now) {
+            
+          } 
+          //end here
+          else if (start_time > now) {
             alert("bidding is Not Started Yet");
             res.redirect("/product_detail/" + id);
           } else {
@@ -829,11 +813,11 @@ router
                        Mobile_No = ?, 
                        DOB = ?, 
                        Password = ?, 
-                       Shipping_Add = ? 
+                       Shipping_Add = ?, 
                        accound_address = ?
                    WHERE User_Id = ?`;
 
-      const values = [name, aadhar, mobile, dob, password, address, userid, acc_address];
+      const values = [name, aadhar, mobile, dob, password, address, acc_address, userid];
 
       // Sanitize user input using placeholders
       con.query(sql, values, (err, result) => {
@@ -842,7 +826,7 @@ router
           res.status(500).send("Error updating profile");
         } else {
           alert("Profile Updated Sucessfully");
-          res.redirect("/profile");
+          res.redirect("/logout");
         }
       });
       // res.redirect("/Update_user_profile");
