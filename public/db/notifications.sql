@@ -16,10 +16,6 @@ INSERT INTO `notification` (`Noti_Id`, `User_Id`, `Message`, `Noti_Time`,`type`)
 (9002, 'jett@101', 'Congratulations ! You have won the bid.', '2023-04-18 20:00:14','Success');
 
 
- 
-
-
-
 select * from notification;
 drop table notification;
 

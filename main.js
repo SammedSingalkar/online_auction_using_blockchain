@@ -67,13 +67,14 @@ router
     const mobile = req.body.mobile;
     const dob = req.body.date;
     const address = req.body.address;
+    const acc_address = req.body.account_address;
     const random_number = Math.floor(Math.random() * 100);
     const userid = name.slice(0, 5) + "@" + random_number;
     const password = req.body.password;
     const profile = req.files.profile_img ? req.files.profile_img.data : null;
 
-    const sql = `INSERT INTO user (Name, Email, Aadhar_Card, Mobile_No, DOB, User_Id, Password, Shipping_Add) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO user (Name, Email, Aadhar_Card, Mobile_No, DOB, User_Id, Password, Shipping_Add, accound_address) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
       name,
@@ -84,6 +85,7 @@ router
       userid,
       password,
       address,
+      acc_address,
     ];
 
     const folderPath = `public/images/user`;
@@ -115,8 +117,6 @@ router
       if (error) throw error;
       if (result.length > 0) {
         if (password === result[0].Password) {
-          // Set session data
-          // console.log(req.session);
           var email = result[0];
           req.session.user = email;
           req.session.isLoggedIn = true;
@@ -133,25 +133,31 @@ router
 
 router.route("/").get((req, res) => {
   if (!req.session.isLoggedIn) {
-    con.query("SELECT * FROM item WHERE Status LIKE 'Active'", (err, result) => {
-      if (err) throw err;
-      res.render("index", {
-        msg: "Login",
-        link: "/signin",
-        link1: "/signin",
-        result: result,
-      });
-    });
+    con.query(
+      "SELECT * FROM item",
+      (err, result) => {
+        if (err) throw err;
+        res.render("index", {
+          msg: "Login",
+          link: "/signin",
+          link1: "/signin",
+          result: result,
+        });
+      }
+    );
   } else {
-    con.query("SELECT * FROM item WHERE Status LIKE 'Active'", (err, result) => {
-      if (err) throw err;
-      res.render("index", {
-        msg: "Login",
-        link: "/signin",
-        link1: "/signin",
-        result: result,
-      });
-    });
+    con.query(
+      "SELECT * FROM item",
+      (err, result) => {
+        if (err) throw err;
+        res.render("index", {
+          msg: "Logout",
+          link: "/logout",
+          link1: "/logout",
+          result: result,
+        });
+      }
+    );
   }
 });
 
@@ -195,35 +201,29 @@ router
       res.redirect("/signin");
     } else {
       const email = req.session.user.Email;
+
       con.query(
         "SELECT * FROM user WHERE Email = ?",
         [email],
         (err, result) => {
           if (err) throw err;
-          res.render("user_content/profile", { result: result });
+          account = result[0].accound_address;
+          web3.eth
+            .getBalance(account)
+            .then((balance) => {
+              // console.log("Account balance:",web3.utils.fromWei(balance, "ether"),"ETH");
+              balance = web3.utils.fromWei(balance, "ether"),"ETH"
+              res.render("user_content/profile", { result: result, balance:balance });
+            })
+            .catch((error) => {
+              console.error("Failed to get balance:", error);
+              res.render("user_content/profile", { result: result, balance:"Account not Found" });
+            });
         }
       );
     }
   })
-  .post((req, res) => {
-    const name = req.body.name;
-    const addhar = req.body.addhar;
-    const mobile = req.body.number;
-    const DOB = req.body.dob;
-    const address = req.body.address;
-    const password = req.body.password;
-    const email = req.session.user.Email;
-    con.query(
-      "UPDATE user SET Name=?, Aadhar_Card=?, Mobile_No=?, DOB=?, Shipping_Add=?, Password=? WHERE Email=?",
-      [name, addhar, mobile, DOB, address, password, email],
-      (err, result) => {
-        if (err) throw err;
-        console.log("Profile updated successfully");
-        // res.render('user_content/profile', {readonly: 'readonly', result: result})
-        res.redirect("/profile");
-      }
-    );
-  });
+
 
 router
   .route("/wishlist")
@@ -261,9 +261,9 @@ router.route("/wishlist/:id").post((req, res) => {
       res.redirect("/wishlist");
     }
   );
-});
+}); 
 
-// router.route("/addwishlist/:id")
+
 
 router.route("/bid").get((req, res) => {
   if (!req.session.isLoggedIn) {
@@ -271,7 +271,7 @@ router.route("/bid").get((req, res) => {
   } else {
     user_id = req.session.user.User_Id;
     con.query(
-      "SELECT * FROM bid JOIN item on bid.item_Id = item.Item_Id where buyer_ID = ?",
+      "SELECT * FROM bid JOIN item on bid.item_Id = item.Item_Id WHERE bid.buyer_ID = ? ORDER BY bid.bid_ID DESC",
       [user_id],
       (err, result) => {
         if (err) throw err;
@@ -344,6 +344,7 @@ router
       const status = "Not Started"; //Sold, Active, Expired, Not Started
       const current_price = starting_price;
       const seller_Id = (user_id = req.session.user.User_Id);
+      const Buyer_Id = "";
 
       const auction_starting = req.body.auction_start + ":00";
       const date = new Date(auction_starting);
@@ -379,8 +380,8 @@ router
         ? req.files.product_image4.data
         : null;
 
-      const sql = `INSERT INTO item (Item_Id, Item_Name, Description, Starting_Bid_Price, Status, Curr_Bid_Price, Seller_Id, Auction_Start_Time, Auction_End_Time, Category) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO item (Item_Id, Item_Name, Description, Starting_Bid_Price, Status, Curr_Bid_Price, Seller_Id, Buyer_Id, Auction_Start_Time, Auction_End_Time, Category) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
       const values = [
         null,
@@ -390,6 +391,7 @@ router
         status,
         current_price,
         seller_Id,
+        Buyer_Id,
         auction_start,
         auction_end,
         category,
@@ -423,7 +425,7 @@ router.route("/selling_history").get((req, res) => {
   } else {
     user_id = req.session.user.User_Id;
     con.query(
-      "SELECT * FROM sell_history JOIN item ON sell_history.Item_Id = item.Item_Id and sell_history.Seller_Id = item.Seller_Id where sell_history.Seller_Id = ?",
+      "SELECT * from item where Seller_Id = ?",
       [user_id],
       (err, result) => {
         if (err) throw err;
@@ -434,7 +436,15 @@ router.route("/selling_history").get((req, res) => {
 });
 
 router.route("/purchases").get((req, res) => {
-  res.render("user_content/purchases");
+  if (!req.session.isLoggedIn) {
+    res.redirect("/signin");
+  } else {
+    user_id = req.session.user.User_Id;
+    con.query("SELECT * from item where Buyer_Id = ?",[user_id],(err,result)=>{
+      if (err) throw err;
+      res.render("user_content/purchases",{result:result});
+    })
+  }
 });
 
 router
@@ -445,6 +455,7 @@ router
     } else {
       const id = req.params.id;
       var user_id = req.session.user.User_Id;
+      var user_address = req.session.user.accound_address;
       con.query("SELECT * FROM item where Item_Id = ?", [id], (err, result) => {
         if (err) throw err;
         const filePath = "public/smart_contract_address/" + id + ".txt";
@@ -459,7 +470,7 @@ router
           const timeDiffInSeconds = Math.floor(
             (endTimestamp - startTimestamp) / 1000
           );
-          console.log(`Time difference in seconds: ${timeDiffInSeconds}`);
+          // console.log(`Time difference in seconds: ${timeDiffInSeconds}`);
           con.query(
             "SELECT * FROM bid where item_Id = ?",
             [id],
@@ -467,7 +478,7 @@ router
               if (err) throw err;
 
               if (now >= end_time) {
-                var s = result1[0].Status;
+                var s = result[0].Status;
                 if (s != "Sold" && s != "Expired") {
                   if (result1.length > 0) {
                     const filePath =
@@ -483,8 +494,7 @@ router
                       contractABI,
                       contractAddress
                     );
-                    const account =
-                      "0x8FbFFAe6cCF561fd8B121EC1D4e6BED74CAc1051";
+                    const account = user_address;
                     contract.methods
                       .auctionEnd()
                       .send({ from: account })
@@ -494,7 +504,14 @@ router
                       .on("error", (error) => {
                         console.error("Auction end failed:", error);
                       });
+                      con.query("SELECT buyer_ID FROM bid WHERE item_Id = ? ORDER BY bid_ID DESC LIMIT 1", [id], (err, result2) => {
+                        if (err) throw err;
+                        const buyer_id = result2[0].buyer_ID;
 
+                        con.query("UPDATE item SET Buyer_Id = ? where Item_Id = ?",[buyer_id,id],(error,results,fields)=>{
+                          if (err) throw err;
+                        })
+                    });
                     var status = "Sold";
                     con.query(
                       "UPDATE item SET Status = ? WHERE Item_Id  = ?",
@@ -544,10 +561,10 @@ router
                         return contract
                           .deploy({
                             data: contractBytecode,
-                            arguments: [timeDiffInSeconds, accounts[1]], // Pass the first account in Ganache as the beneficiary
+                            arguments: [timeDiffInSeconds, user_address], // Pass the first account in Ganache as the beneficiary
                           })
                           .send({
-                            from: accounts[1],
+                            from: user_address,
                             gas: 1500000,
                             gasPrice: "10000000000",
                           });
@@ -597,6 +614,8 @@ router
       var id = req.params.id;
       var amount = req.body.amount;
       var user_id = req.session.user.User_Id;
+      var user_address = req.session.user.accound_address;
+      console.log("User Address is"+user_address)
       con.query(
         "SELECT Curr_Bid_Price, Seller_Id, Status, Auction_End_Time, Auction_Start_Time FROM item where Item_Id = ?",
         [id],
@@ -633,7 +652,7 @@ router
               );
 
               const value = web3.utils.toWei(amount, "ether"); // set the bid value to 1 ETH
-              const account = "0x62a4B352E68264819afFf61229aBC768c95E3245"; // replace with the bidder's account address
+              const account = user_address; // replace with the bidder's account address
               contract.methods
                 .bid()
                 .send({ from: account, value: value })
@@ -667,8 +686,8 @@ router
                             if (err) throw err;
                             let last_Id = result[0].bid_ID;
                             let next_Id = last_Id + 1;
-                            const sql = `INSERT INTO Bid (bid_ID, buyer_ID, seller_ID, item_Id, Bid_Amount, Product_Status, Date_Time) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)`;
+                            const sql = `INSERT INTO Bid (bid_ID, buyer_ID, seller_ID, item_Id, Bid_Amount, Product_Status, Date_Time, Transaction_Hash) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
                             const now = new Date();
                             const year = now.getFullYear();
                             const month = String(now.getMonth() + 1).padStart(
@@ -697,6 +716,7 @@ router
                               amount,
                               status,
                               dateTimeString,
+                              receipt.transactionHash,
                             ];
                             con.query(sql, values, (err, result) => {
                               if (err) throw err;
@@ -784,24 +804,25 @@ router
       res.redirect("/signin");
     } else {
       const profile = req.files?.profile_img?.data;
-const folderPath = `public/images/user`;
-const userid = req.session.user.User_Id;
+      const folderPath = `public/images/user`;
+      const userid = req.session.user.User_Id;
 
-if (profile) {
-  const buffer1 = Buffer.from(profile, "base64");
-  fs.writeFileSync(`${folderPath}/${userid}.jpg`, buffer1);
-}
-  
+      if (profile) {
+        const buffer1 = Buffer.from(profile, "base64");
+        fs.writeFileSync(`${folderPath}/${userid}.jpg`, buffer1);
+      }
+
       const name = req.body.name;
       const aadhar = req.body.aadhar;
       const mobile = req.body.mobile;
       const dob = req.body.date;
       const address = req.body.address;
       const password = req.body.password;
-  
+      const acc_address = req.body.account;
+
       // Hash the password before storing it in the database
       // const hashedPassword = bcrypt.hashSync(password, 10);
-  
+
       const sql = `UPDATE user 
                    SET Name = ?, 
                        Aadhar_Card = ?, 
@@ -809,25 +830,18 @@ if (profile) {
                        DOB = ?, 
                        Password = ?, 
                        Shipping_Add = ? 
+                       accound_address = ?
                    WHERE User_Id = ?`;
-  
-      const values = [
-        name,
-        aadhar,
-        mobile,
-        dob,
-        password,
-        address,
-        userid,
-      ];
-  
+
+      const values = [name, aadhar, mobile, dob, password, address, userid, acc_address];
+
       // Sanitize user input using placeholders
       con.query(sql, values, (err, result) => {
         if (err) {
           console.error(err);
           res.status(500).send("Error updating profile");
         } else {
-          alert("Profile Updated Sucessfully")
+          alert("Profile Updated Sucessfully");
           res.redirect("/profile");
         }
       });

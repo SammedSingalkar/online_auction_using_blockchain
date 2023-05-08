@@ -114,75 +114,34 @@
         <div class="relative mx-auto max-w-7xl">
           <div class="grid max-w-lg gap-12 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
 
+            <% result.forEach((element) => { %>
             <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-              <a href="/blog-post">
+              <a href="/product_detail/<%=element.Item_Id%>">
                 <div class="flex-shrink-0">
-                  <img class="object-cover w-full h-48 rounded-lg" id="img" src="../images/Historic Utensils/Bucket/p1.jpg"  alt="">
+                  <img class="object-cover w-full h-48 rounded-lg" id="img" src="../../public/images/product_images/<%=element.Item_Name%>/1.jpg"  alt="Not Found">
                 </div>
               </a>
               <div class="flex flex-col justify-between flex-1">
-                <a href="/blog-post"></a>
+                <a href="#"></a>
                 <div class="flex-1">
-                  <a href="/blog-post">
+                  <a href="/product_detail/<%=element.Item_Id%>">
                     <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                      <time datetime="2020-03-10"> Mar 10, 2020 </time>
+                      <!-- <time datetime="2020-03-10"> Mar 10, 2020 </time> -->
+                      <time datetime="<%= element.Auction_End_Time %>"> Purchased On
+                        <%= new Date(element.Auction_End_Time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                      </time>
                     </div>
                   </a>
-                  <a href="#" class="block mt-2 space-y-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600" style="color:white;">Ancient Bucket.</h3>
-                    <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
+                  <a href="/product_detail/<%=element.Item_Id%>" class="block mt-2 space-y-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600" style="color:white;"><%=element.Item_Name%></h3>
+                    <p class="text-lg font-normal text-gray-500"><%=element.Description.slice(0,100)%>....</p>
                   </a>
                 </div>
               </div>
             </div>
-      
-            <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-              <a href="/blog-post">
-                <div class="flex-shrink-0">
-                  <img class="object-cover w-full h-48 rounded-lg" id="img" src="../images/Historic Utensils/Glass/p1.jpg" alt="">
-                </div>
-              </a>
-              <div class="flex flex-col justify-between flex-1">
-                <a href="/blog-post"></a>
-                <div class="flex-1">
-                  <a href="/blog-post">
-                    <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                      <time datetime="2020-03-10"> Mar 10, 2020 </time>
-                    </div>
-                  </a>
-                  <a href="#" class="block mt-2 space-y-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600" style="color:white;">Typography on app.</h3>
-                    <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-      
-            <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-              <a href="/blog-post">
-                <div class="flex-shrink-0">
-                  <img class="object-cover w-full h-48 rounded-lg" id="img" src="/assets/images/placeholders/neon-3.jpg" alt="">
-                </div>
-              </a>
-              <div class="flex flex-col justify-between flex-1">
-                <a href="/blog-post"></a>
-                <div class="flex-1">
-                  <a href="/blog-post">
-                    <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                      <time datetime="2020-03-10"> Mar 10, 2020 </time>
-                      <span aria-hidden="true"> · </span>
-                      <span> 4 min read </span>
-                    </div>
-                  </a>
-                  <a href="#" class="block mt-2 space-y-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600" style="color:white;">Typography on app.</h3>
-                    <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <% }); %>
 
-            <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
+            <!-- <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
                 <a href="/blog-post">
                   <div class="flex-shrink-0">
                     <img class="object-cover w-full h-48 rounded-lg" src="/assets/images/placeholders/neon-1.jpg" alt="">
@@ -204,79 +163,7 @@
                     </a>
                   </div>
                 </div>
-              </div>
-
-              <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-                <a href="/blog-post">
-                  <div class="flex-shrink-0">
-                    <img class="object-cover w-full h-48 rounded-lg" src="/assets/images/placeholders/neon-1.jpg" alt="">
-                  </div>
-                </a>
-                <div class="flex flex-col justify-between flex-1">
-                  <a href="/blog-post"></a>
-                  <div class="flex-1">
-                    <a href="/blog-post">
-                      <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                        <time datetime="2020-03-10"> Mar 10, 2020 </time>
-                        <span aria-hidden="true"> · </span>
-                        <span> 4 min read </span>
-                      </div>
-                    </a>
-                    <a href="#" class="block mt-2 space-y-6">
-                      <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600">Typography on app.</h3>
-                      <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
- <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-              <a href="/blog-post">
-                <div class="flex-shrink-0">
-                  <img class="object-cover w-full h-48 rounded-lg" src="/assets/images/placeholders/neon-1.jpg" alt="">
-                </div>
-              </a>
-              <div class="flex flex-col justify-between flex-1">
-                <a href="/blog-post"></a>
-                <div class="flex-1">
-                  <a href="/blog-post">
-                    <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                      <time datetime="2020-03-10"> Mar 10, 2020 </time>
-                      <span aria-hidden="true"> · </span>
-                      <span> 4 min read </span>
-                    </div>
-                  </a>
-                  <a href="#" class="block mt-2 space-y-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600">Typography on app.</h3>
-                    <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col mb-12 overflow-hidden cursor-pointer">
-                <a href="/blog-post">
-                  <div class="flex-shrink-0">
-                    <img class="object-cover w-full h-48 rounded-lg" src="/assets/images/placeholders/neon-1.jpg" alt="">
-                  </div>
-                </a>
-                <div class="flex flex-col justify-between flex-1">
-                  <a href="/blog-post"></a>
-                  <div class="flex-1">
-                    <a href="/blog-post">
-                      <div class="flex pt-6 space-x-1 text-sm text-gray-500">
-                        <time datetime="2020-03-10"> Mar 10, 2020 </time>
-                        <span aria-hidden="true"> · </span>
-                        <span> 4 min read </span>
-                      </div>
-                    </a>
-                    <a href="#" class="block mt-2 space-y-6">
-                      <h3 class="text-2xl font-semibold leading-none tracking-tighter text-neutral-600">Typography on app.</h3>
-                      <p class="text-lg font-normal text-gray-500">Filling text so you can see how it looks like with text. Did I said text?</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              </div> -->
    
           </div>
         </div>

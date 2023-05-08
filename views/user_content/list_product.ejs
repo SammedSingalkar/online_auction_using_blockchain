@@ -116,12 +116,14 @@
 
       <label for="starting-price">Starting Price:</label>
       <input type="text" id="starting-price" name="starting_price" placeholder="Enter starting price" required>
+      <span id="starting-price-error" style="color:red;"></span>
 
       <label for="auction-duration">Auction Start Time: </label>
       <input type="datetime-local" id="auction_start" name="auction_start" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" required>
 
       <label for="auction-duration">Auction end Time:</label>
       <input type="datetime-local" id="auction-end" name="auction_end" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" required>
+      <span id="auction-time-error" style="color:red;"></span>
 
       <label for="auction-duration">Category:</label>
       <select name="category" id="category" required>
@@ -148,14 +150,53 @@
   </section>
 
   <script>
-    
-    // if (window.confirm("You have not registered as a seller Do you want to register as a seller?"))
-    // {
-    //   window.location = "register_seller.html"
-    // }
-    // else{
-    //   window.location = "profile.html"
-    // }
+    const startingPriceInput = document.getElementById("starting-price");
+const startingPriceError = document.getElementById("starting-price-error");
+
+function validateStartingPrice() {
+  const startingPrice = startingPriceInput.value;
+  if (isNaN(startingPrice) || startingPrice < 0) {
+    startingPriceInput.classList.add("error");
+    startingPriceError.textContent = "Starting price must be a positive number";
+    return false;
+  }
+  startingPriceInput.classList.remove("error");
+  startingPriceError.textContent = "";
+  return true;
+}
+startingPriceInput.addEventListener("input", validateStartingPrice);
+  </script>
+
+  <script>
+    const auctionStartInput = document.getElementById("auction_start");
+const auctionEndInput = document.getElementById("auction-end");
+const auctionTimeError = document.getElementById("auction-time-error");
+
+function validateAuctionTime() {
+  const auctionStartTime = new Date(auctionStartInput.value).getTime();
+  const auctionEndTime = new Date(auctionEndInput.value).getTime();
+  const now = Date.now();
+  
+  if (auctionStartTime >= auctionEndTime) {
+    auctionStartInput.classList.add("error");
+    auctionEndInput.classList.add("error");
+    auctionTimeError.textContent = "Auction end time must be after auction start time";
+    return false;
+  }
+  if (auctionStartTime <= now) {
+    auctionStartInput.classList.add("error");
+    auctionEndInput.classList.add("error");
+    auctionTimeError.textContent = "Auction start time must be in the future";
+    return false;
+  }
+  auctionStartInput.classList.remove("error");
+  auctionEndInput.classList.remove("error");
+  auctionTimeError.textContent = "";
+  return true;
+}
+
+auctionStartInput.addEventListener("input", validateAuctionTime);
+auctionEndInput.addEventListener("input", validateAuctionTime);
   </script>
   </body>
 </html>
