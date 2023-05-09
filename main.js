@@ -456,11 +456,12 @@ router
       const id = req.params.id;
       var user_id = req.session.user.User_Id;
       var user_address = req.session.user.accound_address;
-      con.query("SELECT * FROM item where Item_Id = ?", [id], (err, result) => {
+      con.query("SELECT * FROM item INNER JOIN user ON item.Seller_Id = user.User_Id WHERE Item_Id = ?", [id], (err, result) => {
         if (err) throw err;
         const filePath = "public/smart_contract_address/" + id + ".txt";
         var product_name = result[0].Item_Name;
         var stat = result[0].Status;
+        const seller_address = result[0].accound_address;
         if (result.length > 0) {
           var now = new Date();
           var end_time = result[0].Auction_End_Time;
@@ -494,7 +495,7 @@ router
                       contractABI,
                       contractAddress
                     );
-                    const account = user_address;
+                    const account = seller_address;
                     contract.methods
                       .auctionEnd()
                       .send({ from: account })
@@ -561,10 +562,10 @@ router
                         return contract
                           .deploy({
                             data: contractBytecode,
-                            arguments: [timeDiffInSeconds, user_address], // Pass the first account in Ganache as the beneficiary
+                            arguments: [timeDiffInSeconds, seller_address], // Pass the first account in Ganache as the beneficiary
                           })
                           .send({
-                            from: user_address,
+                            from: seller_address,
                             gas: 1500000,
                             gasPrice: "10000000000",
                           });
