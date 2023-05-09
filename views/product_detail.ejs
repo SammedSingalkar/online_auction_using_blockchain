@@ -662,6 +662,25 @@
             const checktime = setInterval(check, 1000);
             check(); // Call once immediately to avoid initial delay
 
+
+            function end(){
+                const targetTime = "<%=element.Auction_End_Time%>";
+                const targetTimeDate = new Date(targetTime);
+            targetTimeDate.setSeconds(targetTimeDate.getSeconds() + 2);
+            const targetTimePlus2Seconds = targetTimeDate.toISOString().replace('T', ' ').slice(0, 19);
+
+            const now = new Date();
+                const currentTime = now.toISOString().replace('T', ' ').slice(0, 19);
+
+                if (currentTime >= targetTimePlus2Seconds) {
+                    location.reload();
+                    
+                }
+            }
+
+            const checkentime = setInterval(end, 1000);
+            end(); // Call once immediately to avoid initial delay
+
         </script>
         <% }) %>
 </body>
