@@ -374,13 +374,28 @@
                 <h3
                     style="font-size: 24px; line-height: 31.2px; font-family: Poppins, sans-serif; font-weight: 550; color:white;">
                     Bid history</h3>
-                <div id="boxe"
-                    style="width:100vh; height:30vh; border:.6px solid #6d69f4; padding:3vh; color:white; font-size: 3vh; border-radius: 6px;">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim deserunt et libero iusto explicabo
-                    inventore dolorum! Recusandae facilis ipsa ipsam esse ea, cupiditate earum tempore quam iure ex
-                    blanditiis ad quis beatae aliquam laboriosam quia! Ut, debitis id magnam quia magni possimus
-                    officiis
-                    impedit quae. </div>
+                <!-- <div id="boxe"
+                    style="width:100vh; height:30vh; border:.6px solid #6d69f4; padding:3vh; color:white; font-size: 3vh; border-radius: 6px;"> -->
+                    <table style="color:white; width:150vh">
+                        <thead>
+                          <tr>
+                            <th>Bid Amount</th>
+                            <th>Date Time</th>
+                            <th>Transaction Hash</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% result1.slice(0,3).forEach((element)=> { %>
+                          <tr>
+                            <td><%=element.Bid_Amount%></td>
+                            <!-- <td><%= new Date(element.Date_Time).toISOString().replace(/T/, ' ').substr(0, 19) %></td> -->
+                            <td><%= new Date(element.Date_Time).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %></td>
+                            <td><%=element.Transaction_Hash%></td>
+                          </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+                    <!-- </div> -->
             </div>
 
             <div class="hide" id="myDIV4">
@@ -405,7 +420,7 @@
                                 <div id="faqCollapse1" class="collapse show" aria-labelledby="faqHeading1"
                                     data-parent="#faqAccordion" style="width:140vh;">
                                     <div class="card-body">
-                                        All successful bidders can confirm their winning bid by checking the “Techbid”.
+                                        All successful bidders can confirm their winning bid by checking the “Easybid”.
                                         In addition, all successful bidders will receive an email notifying them of
                                         their winning bid after the auction closes. </div>
                                 </div>
@@ -424,7 +439,7 @@
                                 <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2"
                                     data-parent="#faqAccordion" style="width:140vh;">
                                     <div class="card-body">
-                                        All successful bidders can confirm their winning bid by checking the “Techbid”.
+                                        All successful bidders can confirm their winning bid by checking the “Easybid”.
                                         In addition, all successful bidders will receive an email notifying them of
                                         their winning bid after the auction closes. </div>
                                 </div>
@@ -442,7 +457,7 @@
                                 <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3"
                                     data-parent="#faqAccordion" style="width:140vh;">
                                     <div class="card-body">
-                                        All successful bidders can confirm their winning bid by checking the “Techbid”.
+                                        All successful bidders can confirm their winning bid by checking the “Easybid”.
                                         In addition, all successful bidders will receive an email notifying them of
                                         their winning bid after the auction closes. </div>
                                 </div>
@@ -460,7 +475,7 @@
                                 <div id="faqCollapse4" class="collapse" aria-labelledby="faqHeading4"
                                     data-parent="#faqAccordion" style="width:140vh;">
                                     <div class="card-body">
-                                        All successful bidders can confirm their winning bid by checking the “Techbid”.
+                                        All successful bidders can confirm their winning bid by checking the “Easybid”.
                                         In addition, all successful bidders will receive an email notifying them of
                                         their winning bid after the auction closes. </div>
                                 </div>

@@ -473,7 +473,7 @@ router
           );
           // console.log(`Time difference in seconds: ${timeDiffInSeconds}`);
           con.query(
-            "SELECT * FROM bid where item_Id = ?",
+            "SELECT * FROM bid where item_Id = ? order by bid_ID DESC",
             [id],
             (err, result1) => {
               if (err) throw err;
@@ -595,7 +595,7 @@ router
                 });
               }
               // Render the product detail page after updating the status
-              res.render("product_detail", { result: result });
+              res.render("product_detail", { result: result, result1:result1 });
             }
           );
         } else {
