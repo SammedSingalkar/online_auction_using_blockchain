@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
     <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/style_responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -50,35 +51,35 @@
                             <ul class="sub-menu">
                                 <li><a href="/all/categories"
                                         style="color:white; font-size:2vh; font-weight: 500;">All</a></li>
-                                <li><a href="/" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                <li><a href="/category_products/car" style="color:white; font-size:2vh; font-weight: 500;"><img
                                             src="../public/images/other/category/vehicle.png" alt="" height="15px"
                                             width="15px">
                                         Vehicles</a></li>
-                                <li><a href="" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                <li><a href="/category_products/cloths" style="color:white; font-size:2vh; font-weight: 500;"><img
                                             src="../public/images/other/category/cloth.png" alt="" height="15px"
                                             width="15px"> Historic
                                         cloths</a></li>
-                                <li><a href="" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                <li><a href="/category_products/arts" style="color:white; font-size:2vh; font-weight: 500;"><img
                                             src="../public/images/other/category/art.png" alt="" height="15px"
                                             width="15px">
                                         Arts and Crafts</a></li>
                                 <li>
-                                    <a class="parent" href="#"
+                                    <a class="parent"
                                         style="color:white; font-size:2vh; font-weight: 500;"><img
                                             src="../public/images/other//category/antique.png" alt="" height="15px"
                                             width="15px">
                                         Antique items</a>
 
                                     <ul class="sub-menu">
-                                        <li><a href="/" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                        <li><a href="/category_products/coins" style="color:white; font-size:2vh; font-weight: 500;"><img
                                                     src="../public/images/other//category/coins.png" alt=""
                                                     height="15px" width="15px">
                                                 Coins</a></li>
-                                        <li><a href="/" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                        <li><a href="/category_products/utensils" style="color:white; font-size:2vh; font-weight: 500;"><img
                                                     src="../public/images/other//category/utensil.png" alt=""
                                                     height="15px" width="15px">
                                                 Utensils</a></li>
-                                        <li><a href="" style="color:white; font-size:2vh; font-weight: 500;"><img
+                                        <li><a href="/category_products/jwelery" style="color:white; font-size:2vh; font-weight: 500;"><img
                                                     src="../public/images/other//category/jwelery.png" alt=""
                                                     height="15px" width="15px">
                                                 Jewelry</a></li>
@@ -106,7 +107,7 @@
     </div>
     <div class="container">
         <div class="cont">
-            <div class="content" style="display:inline-block">
+            <div class="content">
                 <h3>Product Details</h3>
                 <h4>Home &#x21D2; Product Details</h4>
             </div>
@@ -672,7 +673,7 @@
             const now = new Date();
                 const currentTime = now.toISOString().replace('T', ' ').slice(0, 19);
 
-                if (currentTime >= targetTimePlus2Seconds) {
+                if (currentTime == targetTimePlus2Seconds) {
                     location.reload();
                     
                 }

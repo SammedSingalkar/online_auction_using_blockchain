@@ -59,9 +59,11 @@
                         <div class="alert-icon">
                             <i class="material-icons">error_outline</i>
                         </div>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <form action="/notify/<%=element.Noti_Id%>" method="post">
+                        <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="material-icons">clear</i></span>
                         </button>
+                    </form>
                         <b>Error Alert:</b><%=element.Message%>
                         
                     </div>

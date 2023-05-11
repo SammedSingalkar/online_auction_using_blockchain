@@ -2,272 +2,208 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js" integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9431586165017079"
+    crossorigin="anonymous"></script>
+    <link rel="icon" href="../public/logo.svg" size="128x128">
 
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!--=============== BOXICONS ===============-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-
-    <!--=============== SWIPER CSS ===============--> 
-    <!-- <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"> -->
-    <link rel="stylesheet" href="../public/css/swiper-bundle.min.css">
-
-    <!--=============== CSS ===============-->
-    <!-- <link rel="stylesheet" href="assets/css/styles.css"> -->
-    <link rel="stylesheet" href="../public/css/styles.css">
-
-    <title>Category Details</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="../public/css/menu.css">
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	<link rel="shortcut icon" type="image/x-icon" href="../public/images/other/logo2.png" />
 </head>
-<body>
-    <!--==================== HEADER ====================-->
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo" style="font-size: 20px;">
-                <!-- <i class='bx bxs-coin nav__logo-icon'></i> --> <img src="coin.png" style="height: 45px;"> Antique Coins 
-            </a>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4G62X7464J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="/Categories.html" class="nav__link">Category</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#featured" class="nav__link">Featured</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#products" class="nav__link">Products</a>
-                    </li>
-                </ul>
+  gtag('config', 'G-4G62X7464J');
+</script>
+<body style="background-color:  #101046;">
+    <div id="wrap">
 
-                <div class="nav__close" id="nav-close">
-                    <i class='bx bx-x' ></i>
-                </div>
+		<header style="background-color:  #000036; font-size: larger; border-bottom: .6px solid grey;">
+			<!-- <img src="images/logo2.png" alt="" height="300px" width="400px"> -->
+			<a class="logo"><img src="../public/images/other/logo1.png" alt="fresh design web" height="60px" width="200px"></a>
+			<div class="inner relative">
+
+
+				<a id="menu-toggle" class="button dark" href="#"><i class="icon-reorder"></i></a>
+				<nav id="navigation">
+					<ul id="main-menu">
+						<li class="current-menu-item"><a
+								style="font-family: sans-serif; font-size: large; font-weight: 700;" href="/">Home</a>
+						</li>
+						<li class="parent">
+							<a href="/"
+								style="font-family: sans-serif; font-size: large; font-weight: 700;">Categories</a>
+							<ul class="sub-menu">
+								<li><a href="/all/categories" style="color:white; font-size:2vh; font-weight: 500;">All</a></li>
+								<li><a href="/category_products/car" style="color:white; font-size:2vh; font-weight: 500;"><img
+											src="../public/images/other/category/vehicle.png" alt="" height="15px" width="15px">
+										Vehicles</a></li>
+								<li><a href="/category_products/cloths" style="color:white; font-size:2vh; font-weight: 500;"><img
+											src="../public/images/other/category/cloth.png" alt="" height="15px" width="15px"> Historic
+										cloths</a></li>
+								<li><a href="/category_products/arts" style="color:white; font-size:2vh; font-weight: 500;"><img
+											src="../public/images/other/category/art.png" alt="" height="15px" width="15px">
+										Arts and Crafts</a></li>
+								<li>
+									<a class="parent"
+										style="color:white; font-size:2vh; font-weight: 500;"><img
+											src="../public/images/other/category/antique.png" alt="" height="15px" width="15px">
+										Antique items</a>
+
+									<ul class="sub-menu">
+										<li><a href="/category_products/coins" style="color:white; font-size:2vh; font-weight: 500;"><img
+													src="../public/images/other/category/coins.png" alt="" height="15px" width="15px">
+												Coins</a></li>
+										<li><a href="/category_products/utensils" style="color:white; font-size:2vh; font-weight: 500;"><img
+													src="../public/images/other/category/utensil.png" alt="" height="15px" width="15px">
+												Utensils</a></li>
+										<li><a href="/category_products/jwelery" style="color:white; font-size:2vh; font-weight: 500;"><img
+													src="../public/images/other/category/jwelery.png" alt="" height="15px" width="15px">
+												Jewelry</a></li>
+										<li><a href="" style="color:white ; font-size:2vh; font-weight: 500;"><i
+													class="icon-file-alt"></i>
+												Historic Books and Documentation</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+
+						<li><a style="font-family: sans-serif; font-size: large; font-weight: 700;"
+							href="/about">About us</a>
+					</li>
+
+						<li><a
+								href="/contact" style="font-family: sans-serif; font-size: large; font-weight: 700;">Contact</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="clear"></div>
+			</div>
+		</header>
+	</div>
+
+
+      <section class="main-content" style="background-color:  #101046;">
+        <% result.forEach((element) => { %>
+        <div class="card" style="width: 18rem;">
+            <img src="../public/images/product_images/<%=element.Item_Name%>/1.jpg" class="card-img-top" style="height: 150px;" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%=element.Item_Name%></h5>
+              <p class="card-text">
+                Category  -  <%=element.Category%> <br>
+                Status - <%=element.Status%> <br>
+                Current Bid Price - <%=element.Curr_Bid_Price%> <br>
+                Start Time - <%= new Date(element.Auction_Start_Time).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %> <br>
+                End Time - <%= new Date(element.Auction_End_Time).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) %> <br>
+              </p>
+              <center><a href="/product_detail/<%=element.Item_Id%>" class="btn btn-primary">Bid</a></center>
             </div>
+          </div>
+          <% }); %>
 
-            <div class="nav__btns">
-                <!-- Theme change button -->
-                <!-- <i class='bx bx-moon change-theme' id="theme-button"></i> -->
-
-                <!-- <div class="nav__shop" id="cart-shop">
-                    <i class='bx bx-shopping-bag'> Cart</i>
-                </div> -->
-
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' ></i>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-
-    <!--==================== MAIN ====================-->
-    <main class="main">
-        <!--==================== PRODUCTS ====================-->
-        <section class="new section container" id="products">
-            <h2 class="section__title">
-                Products
-            </h2>                
-            <div class="new__container">
-                <div class="swiper new-swiper">
-                    <div class="swiper-wrapper">
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 7.jpg" alt="" class="new__img">
-
-                            <div class="new__data">
-                                <h3 class="new__title">Indian Rupee Bust of George V Emperor</h3>
-                                <span class="new__price">$580</span>
-                            </div>
-    
-                            <button class="button new__button">ADD TO CART</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 9.jpg" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">Indian Rupee Bust of Edward VII Emperor</h3>
-                                <span class="new__price">$1150</span>
-                            </div>
-    
-                            <button class="button new__button">ADD TO CART</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 12.jpg" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">East India Company One Mohur Gold Coin</h3>
-                                <span class="new__price">$750</span>
-                            </div>
-    
-                            <button class="button new__button">ADD TO CART</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 13.webp" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">Early One Paise Coin 1943</h3>
-                                <span class="new__price">$690</span>
-                            </div>
-    
-                            <button class="button new__button">ADD TO CART</button>
-                        </article>                       
-                    </div>
-                </div>
-            </div>
-            <div class="new__container">
-                <div class="swiper new-swiper">
-                    <div class="swiper-wrapper">
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 14.webp" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">Spanish Silver Coin 1676</h3>
-                                <span class="new__price">$980</span>
-                            </div>
-    
-                            <button class="button new__button">Bid</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 15.jpg" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">God Of The Sun 2 OZ Silver Coin</h3>
-                                <span class="new__price">$1150</span>
-                            </div>
-    
-                            <button class="button new__button">Bid</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 16.webp" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title"> Republic Portuguese 1 Escudo Copper-Nickel Coin 1959</h3>
-                                <span class="new__price">$750</span>
-                            </div>
-    
-                            <button class="button new__button">Bid</button>
-                        </article>
-
-                        <article class="new__card swiper-slide">
-                            <span class="new__tag">New</span>
-    
-                            <img src="images/coins/coin 17.jpg" alt="" class="new__img">
-    
-                            <div class="new__data">
-                                <h3 class="new__title">Queen Victoria Crowned Indian One Rupee Coin 1862</h3>
-                                <span class="new__price">$1590</span>
-                            </div>
-    
-                            <button class="button new__button">ADD TO CART</button>
-                        </article>                       
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    <!--==================== FOOTER ====================-->
-    <footer class="footer section">
-        <hr><br><br>
-        <div class="footer__container container grid">
-            <div class="footer__content">
-                <h3 class="footer__title">Our information</h3>
-
-                <ul class="footer__list">
-                    <li>EasyBid</li>
-                    <li>WIT Solapur</li>
-                    <li>123-456-7890</li>
-                </ul>
-            </div>
-            <div class="footer__content">
-                <h3 class="footer__title">About Us</h3>
-
-                <ul class="footer__links">
-                    <li>
-                        <a href="#" class="footer__link">Support Center</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Customer Support</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">About Us</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Copy Right</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="footer__content">
-                <h3 class="footer__title">Product</h3>
-
-                <ul class="footer__links">
-                    <li>
-                        <a href="#" class="footer__link">Historic Utensils</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Arts & Crafts</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Books & Magzines</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Gadgets & Accesories</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="footer__content">
-                <h3 class="footer__title">Social</h3>
-
-                <ul class="footer__social">
-                    <a href="https://www.facebook.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-facebook'></i>
-                    </a>
-
-                    <a href="https://twitter.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-twitter' ></i>
-                    </a>
-
-                    <a href="https://www.instagram.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-instagram' ></i>
-                    </a>
-                </ul>
-            </div>
         </div>
-        <hr>
 
-        <span class="footer__copy">EasyBid. All rigths reserved</span>
-    </footer>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+               <% if (currentPage === 1) { %>
+               <li class="page-item disabled">
+                  <a class="page-link">Previous</a>
+               </li>
+               <% } else { %>
+               <li class="page-item">
+                  <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+               </li>
+               <% } %>
+               <% for (let i = 1; i <= pageCount; i++) { %>
+               <% if (currentPage === i) { %>
+               <li class="page-item active">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+               </li>
+               <% } else { %>
+               <li class="page-item">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+               </li>
+               <% } %>
+               <% } %>
+               <% if (currentPage === pageCount) { %>
+               <li class="page-item disabled">
+                  <a class="page-link">Next</a>
+               </li>
+               <% } else { %>
+               <li class="page-item">
+                  <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+               </li>
+               <% } %>
+            </ul>
+         </nav><br><br>
+      </section>
 
-    <!--=============== SCROLL UP ===============-->
-    <a href="#" class="scrollup" id="scroll-up"> 
-        <i class='bx bx-up-arrow-alt scrollup__icon' ></i>
-    </a>
+      
 
-    <!--=============== SWIPER JS ===============-->
-    <script src="assets/js/swiper-bundle.min.js"></script>
 
-    <!--=============== MAIN JS ===============-->
-    <script src="assets/js/main.js"></script>
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+      
+     <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
+     <script src="https://unpkg.com/tippy.js@4"></script>
+   
 </body>
+
+<style>
+
+            
+    .main-content {
+padding: 14px;
+
+}
+
+.card{
+  margin: 2vh auto;
+}
+
+/* Tablet */
+@media (min-width:600px) {
+.main-content {
+  padding: 20px;
+}
+
+.card{
+  /* margin-left:5vh; */
+  display: inline-flex;
+  margin:4vh 3vh;
+ 
+}
+
+}
+
+/* Desktop */
+@media (min-width:900px) {
+.main-content {
+  padding:24px
+}
+.card{
+      display: inline-flex;
+      margin-top:20px;
+      margin-bottom: 20px;
+      /* margin-left: 5vh; */
+      margin: 2vh 5vh;
+    }
+}
+
+  </style>
 </html>

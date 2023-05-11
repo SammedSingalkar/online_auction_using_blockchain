@@ -1,0 +1,299 @@
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+    .navic {
+      height: 8vh;
+      font-size: small;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    #msg {
+      padding-left: 0;
+      padding-top: 1vh;
+    }
+    
+    #name {
+      padding-top: 1vh;
+      font-size: medium;
+    }
+    
+    .logo {
+      margin: 0;
+      width: 8vh;
+      height: 8vh;
+    }
+    
+    #sname {
+      padding-left: 0;
+      font-size: small;
+    }
+  }
+  
+  /* Tablet styles */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .navic {
+      height: 10vh;
+      font-size: medium;
+      justify-content: space-between;
+    }
+    
+    #msg {
+      padding-left: 5vh;
+    }
+    
+    #name {
+      font-size: large;
+    }
+    
+    .logo {
+      margin: 0;
+      width: 10vh;
+      height: 10vh;
+    }
+    
+    #sname {
+      padding-left: 4vh;
+    }
+  }
+
+  /* For screens smaller than 600px (mobile devices) */
+@media screen and (max-width: 600px) {
+
+    #account {
+        font-size: 2vh;
+        padding-top: 1.5vh;
+    }
+
+    #search {
+        margin-left: 2vh;
+        margin-top: 3vh;
+        width: 20vh;
+        font-size: medium;
+    }
+
+    .logsig h5{
+        margin-left: 2vh;
+        margin-top: 3vh;
+        font-size: medium;
+    }
+
+    .regbutton{
+        margin-top: 2.5vh;
+        margin-left: 2vh;
+    }
+
+    .register_button{
+        width: 60px; 
+        height: 30px; 
+        font-size: medium;
+    }
+}
+
+/* For screens between 600px and 900px (tablet devices) */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+
+    #account {
+        font-size: 2vh;
+        padding-top: 1.5vh;
+    }
+
+    #search {
+        margin-left: 3vh;
+        margin-top: 3vh;
+        width: 25vh;
+        font-size: medium;
+    }
+
+    .logsig h5{
+        margin-left: 3vh;
+        margin-top: 3vh;
+        font-size: medium;
+    }
+
+    .regbutton{
+        margin-top: 2.5vh;
+        margin-left: 3vh;
+    }
+
+    .register_button{
+        width: 70px; 
+        height: 35px; 
+        font-size: medium;
+    }
+}
+
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+    .item_marks {
+      top: 5px;
+      left: 5px;
+    }
+    
+    .item_mark {
+      width: 15px;
+      height: 15px;
+      font-size: 6px;
+      line-height: 15px;
+    }
+  }
+  
+  /* Tablet styles */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .item_marks {
+      top: 15px;
+      left: 15px;
+    }
+    
+    .item_mark {
+      width: 25px;
+      height: 25px;
+      font-size: 10px;
+      line-height: 25px;
+    }
+  }
+
+
+  /* Mobile styles */
+@media only screen and (max-width: 600px) {
+    .divide {
+      height: 60vh;
+    }
+    
+    .divide img {
+      margin-top: 5vh;
+      height: auto;
+      max-width: 100%;
+    }
+    
+    #start_selling {
+      width: 70%;
+      margin-top: 5vh;
+    }
+  }
+  
+  /* Tablet styles */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .divide {
+      height: 80vh;
+    }
+    
+    .divide img {
+      margin-top: 7vh;
+      height: auto;
+      max-width: 80%;
+    }
+    
+    #start_selling {
+      width: 60%;
+      margin-top: 5vh;
+    }
+  }
+
+
+
+  /* Mobile styles */
+@media only screen and (max-width: 600px) {
+    #chal {
+      height: auto;
+    }
+    
+    #second {
+      grid-template-columns: 1fr;
+    }
+    
+    .deal {
+      padding: 5vh;
+      max-width: 100%;
+    }
+    
+    .deal h1 {
+      font-size: 6vh;
+      margin-bottom: 2vh;
+    }
+    
+    .deal h2 {
+      font-size: 3vh;
+      margin-bottom: 3vh;
+    }
+    
+    #signup_button {
+      max-width: 100%;
+    }
+    
+    #outside {
+      padding: 2vh;
+    }
+  }
+  
+  /* Tablet styles */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .deal {
+      padding: 7.5vh;
+      max-width: 90%;
+    }
+    
+    .deal h1 {
+      font-size: 8vh;
+      margin-bottom: 4vh;
+    }
+    
+    .deal h2 {
+      font-size: 3.5vh;
+      margin-bottom: 4vh;
+    }
+    
+    #signup_button {
+      max-width: 90%;
+    }
+    
+    #outside {
+      padding: 4vh;
+    }
+  }
+
+
+
+  @media only screen and (min-width: 768px) {
+    .box{
+        width: 44vh;
+    }
+    
+    .box1{
+        width: 45vh;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .outside1{
+        margin-left: 0;
+    }
+}
+
+
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+    .account_login span {
+      padding-right: 20px;
+    }
+    
+    .account_login span:after {
+      opacity: 1;
+      right: 0;
+    }
+  }
+  
+  /* Tablet styles */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .account_login span {
+      padding-right: 30px;
+    }
+    
+    .account_login span:after {
+      opacity: 1;
+      right: 5px;
+    }
+    
+    .account_login:hover span {
+      color: #0e8ce4;
+    }
+  }

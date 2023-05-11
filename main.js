@@ -142,20 +142,26 @@ router.route("/").get((req, res) => {
           link: "/signin",
           link1: "/signin",
           result: result,
+          notify: '',
         });
       }
     );
   } else {
+    const user_id = req.session.user.User_Id;
     con.query(
       "SELECT * FROM item",
       (err, result) => {
         if (err) throw err;
-        res.render("index", {
-          msg: "Logout",
-          link: "/logout",
-          link1: "/logout",
-          result: result,
-        });
+    con.query("SELECT count(*) from notification where User_Id = ?",[user_id], (err,result1)=>{
+      const notify = result1[0]["count(*)"];
+      res.render("index", {
+        notify: notify,
+        msg: "Logout",
+        link: "/logout",
+        link1: "/logout",
+        result: result,
+      });
+    })   
       }
     );
   }
@@ -190,9 +196,56 @@ router.route("/all/categories").get((req, res) => {
   );
 });
 
-router.route("/category_prodcuts").get((req, res) => {
-  res.render("category_detail");
+router.route("/category_products").get((req, res) => {
+    const resultsPerPage = 8;
+    const page = req.query.page || 1;
+    const offset = (page - 1) * resultsPerPage;
+
+    const query = "SELECT * FROM item LIMIT ?, ?";
+    con.query(query, [offset, resultsPerPage], (err, result) => {
+      if (err) throw err;
+
+      const queryCount = "SELECT COUNT(*) as count FROM item";
+      con.query(queryCount, (err, countResult) => {
+        if (err) throw err;
+        const count = countResult[0].count;
+        const pageCount = Math.ceil(count / resultsPerPage);
+
+        res.render("category_detail", {
+          result: result,
+          currentPage: page,
+          pageCount: pageCount,
+        });
+      });
+    });
 });
+
+router.route("/category_products/:Category")
+  .get((req, res) => {
+    const category = req.params.Category;
+    // console.log(category)
+    const resultsPerPage = 8;
+    const page = req.query.page || 1;
+    const offset = (page - 1) * resultsPerPage;
+
+    const query = `SELECT * FROM item WHERE Category LIKE '%${category}%' LIMIT ?, ?`;
+    con.query(query, [offset, resultsPerPage], (err, result) => {
+      if (err) throw err;
+
+      const queryCount = `SELECT COUNT(*) as count FROM item WHERE Category LIKE '%${category}%'`;
+      con.query(queryCount, (err, countResult) => {
+        if (err) throw err;
+        const count = countResult[0].count;
+        const pageCount = Math.ceil(count / resultsPerPage);
+
+        res.render("category_detail", {
+          result: result,
+          currentPage: page,
+          pageCount: pageCount,
+        });
+      });
+    });
+  })
 
 router
   .route("/profile")
@@ -583,9 +636,9 @@ router
                             console.error(err);
                             return;
                           }
-                          console.log(
-                            "File created and content written successfully!"
-                          );
+                          // console.log(
+                          //   "File created and content written successfully!"
+                          // );
                         });
                       });
                   } else {
@@ -616,7 +669,7 @@ router
       var amount = req.body.amount;
       var user_id = req.session.user.User_Id;
       var user_address = req.session.user.accound_address;
-      console.log("User Address is"+user_address)
+      // console.log("User Address is"+user_address)
       con.query(
         "SELECT Curr_Bid_Price, Seller_Id, Status, Auction_End_Time, Auction_Start_Time FROM item where Item_Id = ?",
         [id],
@@ -705,8 +758,9 @@ router
                         ];
                         con.query(sql, values, (err, result) => {
                           if (err) throw err;
-                          alert("Data inserted successfully");
+                          // res.status(200).json({ message: "Success" });
                           res.redirect("/product_detail/" + id);
+                          // res.status(200);
                         });
                       });
                     }
@@ -725,9 +779,12 @@ router
           else if (start_time > now) {
             alert("bidding is Not Started Yet");
             res.redirect("/product_detail/" + id);
+            // res.status(200);
           } else {
             alert("bidding is Expired");
             res.redirect("/product_detail/" + id);
+            // res.status(200);
+
           }
         }
       );
@@ -755,7 +812,7 @@ router.route("/addwishlist/:id").post((req, res) => {
 
           con.query(sql, values, (err, result) => {
             if (err) throw err;
-            alert("Data inserted successfully");
+            alert("Added in Watchlist");
             res.redirect("/product_detail/" + item_id);
           });
         } else {

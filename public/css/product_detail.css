@@ -21,6 +21,9 @@ figure img{
     display: inline-flex;
 }
 
+.content{
+    display:inline-block
+}
 
 .bbtn{
     color:white; 
