@@ -4,6 +4,32 @@
    <meta charset="utf-8">
    <title>Form</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+     <script type="text/javascript">
+      $(document).ready(function () {
+        if ("<%= alert %>" === "true") {
+          var alertTitle = "<%= alertTitle %>"
+          var alertMessage = "<%= alertMessage %>"
+          swal(alertTitle, alertMessage, "error");
+        }
+      })
+    </script>
+
+
+<script type="text/javascript">
+   $(document).ready(function () {
+     if ("<%= successMessage %>" === "true") {
+      //  var alertTitle = "<%= alertTitle %>"
+      //  var alertMessage = "<%= alertMessage %>"
+       var alertTitle = "Registration Successful"
+       var alertMessage = "Login to profile"
+       swal(alertTitle, alertMessage, "success");
+     }
+   })
+ </script>
 
    <style>
       * {
@@ -167,9 +193,9 @@
 
          <!---Submit Button------>
          <!-- <br> -->
-         <div class="fr">
+         <!-- <div class="fr">
             <p style="color:white;"><%=message%></p><br>
-         </div>
+         </div> -->
          <div class="box" style="background: #000036">
            <input type="Submit" name="Submit" id="submit" class="submit" value="LOGIN"> 
          </div><br>

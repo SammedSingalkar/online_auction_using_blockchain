@@ -30,6 +30,20 @@
 
   gtag('config', 'G-4G62X7464J');
 </script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+ $(document).ready(function () {
+   if ("<%= addproduct %>" === "true") {
+     var alertTitle = "Product Added Successfully"
+     var alertMessage = "You Can view your product here"
+     swal(alertTitle, alertMessage, "success");
+   }
+ })
+</script>
 <body style="background-color:  #101046;">
     <div id="wrap">
 

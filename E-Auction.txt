@@ -1,0 +1,51 @@
+List of categories for auction
+1) antique Coins
+2) Vehicles
+3) antique Utensils
+4) Watches
+5) Antique jewelry
+6) Arts and Crafts (Paintings)
+7) Historic documentation and Books
+8) Historic Cloths
+9) Other
+-----------------------------------------------------------------------------------------------------------------
+                                     Landing Page
+A) Navigation Bar
+  1) Home 
+  2) your-account, previous bids  
+  3) contact
+  4) About us
+  5) Buy-product (bids for item) / Auctions - all auctions, antique coins, antique jwellery.....
+  6) Services - transport,
+
+
+B) Footer
+  1) Support - Contact us, FAQ, about us
+  2) More - Security, Terms and Conditions, Privacy policy
+  3) Account - Login, Register, sell
+  4) Auction - today's auction, auction calender
+  5) 
+
+
+C) Upcoming auctions
+   category wise
+
+
+D) Recommded auctions 
+   selected categorywise
+
+E) Sell with E-Auction slide
+
+F) Current auctions (Live Auctions)
+---------------------------------------------------------------------------------------------------------------------    
+                               User Account 
+A) Buyer section
+  1) profile
+  2) Watchlist
+  3) Auction History
+  4) Puchases
+B) Seller Section 
+  1) Seller portal
+  2) history
+  3) Upcoming
+----------------------------------------------------------------------------------------------------------------

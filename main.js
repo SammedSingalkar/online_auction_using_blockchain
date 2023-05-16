@@ -11,6 +11,11 @@ const solc = require("solc");
 const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const Web3 = require("web3");
+const Swal = require('sweetalert2');
+const flash = require('express-flash');
+const notifier = require('node-notifier');
+
+
 const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545")); //replace with your Infura project ID
 
 // const web3 = new Web3(Web3.givenProvider || 'https://sepolia.infura.io/v3/');
@@ -25,6 +30,7 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
 app.use(express.urlencoded({ extended: true }));
+app.use(flash())
 // app.use(express.urlencoded({ extended: true }));
 
 // app.use('/api',router)
@@ -54,6 +60,12 @@ router.use(
     }, // Session expires in 100 hour
   })
 );
+
+// app.use(function(req, res, next) {
+//   res.locals.Swal = require('sweetalert2');
+//   next();
+// });
+
 
 router
   .route("/register")
@@ -95,7 +107,8 @@ router
 
     con.query(sql, values, (err, result) => {
       if (err) throw err;
-      alert("Data inserted successfully");
+      // alert("Data inserted successfully");
+      req.flash('success', 'true');
       res.redirect("/signin");
     });
   });
@@ -104,7 +117,8 @@ router
   .route("/signin")
   .get((req, res) => {
     if (!req.session.isLoggedIn) {
-      res.render("signin", { message: "" });
+      const successMessage = req.flash('success');
+      res.render("signin", { message: "",alert:"False",alertTitle:"", alertMessage:"",successMessage:successMessage });
     } else {
       res.redirect("/profile");
     }
@@ -123,10 +137,10 @@ router
 
           res.redirect("/profile");
         } else {
-          res.render("signin", { message: "password is wrong" });
+          res.render("signin", { message: "password is wrong", alert:"true",alertTitle:"Password is wrong",alertMessage:"Please Put Correct Password" });
         }
       } else {
-        res.render("signin", { message: "User Not Found" });
+        res.render("signin", { message: "User Not Found", alert:"true",alertTitle:"User Not Found",alertMessage:"Please Put Correct Email Id" });
       }
     });
   });
@@ -188,7 +202,7 @@ router.route("/contact").get((req, res) => {
 
 router.route("/all/categories").get((req, res) => {
   con.query(
-    "SELECT category, COUNT(*) as count FROM item GROUP BY category",
+    "SELECT typename from type",
     (err, result) => {
       if (err) throw err;
       res.render("Categories", { result: result });
@@ -238,10 +252,13 @@ router.route("/category_products/:Category")
         const count = countResult[0].count;
         const pageCount = Math.ceil(count / resultsPerPage);
 
+        // req.flash('addproduct', 'true');
+        const addproduct = req.flash('addproduct');
         res.render("category_detail", {
           result: result,
           currentPage: page,
           pageCount: pageCount,
+          addproduct:addproduct,
         });
       });
     });
@@ -277,6 +294,26 @@ router
     }
   })
 
+  router.route("/wishlist/:id").post((req, res) => {
+    var id = req.params.id;
+    con.query(
+      "Delete from watchlist where WatchList_Id = ?",
+      [id],
+      (err, result) => {
+        if (err) 
+        {
+          throw err;
+        }
+        notifier.notify({
+          title: 'Watchlist',
+          message: 'Item deleted successfully!',
+          icon: 'public/images/delete.png'
+        });
+        res.status(201).redirect('/wishlist');
+      }
+    );
+  }); 
+
 
 router
   .route("/wishlist")
@@ -290,7 +327,8 @@ router
         [user_id],
         (err, result) => {
           if (err) throw err;
-          res.render("user_content/wishlist", { result: result });
+          res.render('user_content/wishlist', { result: result});
+          
         }
       );
     }
@@ -298,24 +336,15 @@ router
   .post((req, res) => {
     con.query("Delete from watchlist", (err, result) => {
       if (err) throw err;
-      alert("Deleted Successfullt");
+      // alert("Deleted Successfullt");
+      notifier.notify({
+        title: 'Watchlist',
+        message: 'All Items deleted Successfully',
+        icon: 'public/images/delete.png'
+      });
       res.redirect("/wishlist");
     });
   });
-
-router.route("/wishlist/:id").post((req, res) => {
-  var id = req.params.id;
-  con.query(
-    "Delete from watchlist where WatchList_Id = ?",
-    [id],
-    (err, result) => {
-      if (err) throw err;
-      alert("Deleted Successfullt");
-      res.redirect("/wishlist");
-    }
-  );
-}); 
-
 
 
 router.route("/bid").get((req, res) => {
@@ -373,7 +402,12 @@ router.route("/notify/:id").post((req, res) => {
     [id],
     (err, result) => {
       if (err) throw err;
-      alert("Deleted Successfullt");
+      // alert("Deleted Successfullt");
+      // notifier.notify({
+      //   title: 'Notification',
+      //   message: 'Notification deleted successfully!',
+      //   icon: 'public/images/delete.png'
+      // });
       res.redirect("/notify");
     }
   );
@@ -382,10 +416,14 @@ router.route("/notify/:id").post((req, res) => {
 router
   .route("/list_product")
   .get((req, res) => {
-    con.query("SELECT DISTINCT Category FROM item", (err, result) => {
+    if (!req.session.isLoggedIn) {
+      res.redirect("/signin");
+    } else {
+    con.query("SELECT typename FROM type", (err, result) => {
       if (err) throw err;
       res.render("user_content/list_product", { result: result });
     });
+  }
   })
   .post((req, res) => {
     if (!req.session.isLoggedIn) {
@@ -465,8 +503,10 @@ router
 
       con.query(sql, values, (err, result) => {
         if (err) throw err;
-        alert("Data inserted successfully");
-        res.redirect("/list_product");
+        // alert("Data inserted successfully");
+        // req.flash('success', 'Item added successfully!');
+        req.flash('addproduct', 'true');
+        res.redirect("/category_products/"+category);
       });
     }
   });
@@ -509,6 +549,13 @@ router
       const id = req.params.id;
       var user_id = req.session.user.User_Id;
       var user_address = req.session.user.accound_address;
+      const lessAmount =  req.flash('lessAmount');
+      const notstarted =  req.flash('notstarted');
+      const expired =  req.flash('expired');
+      const insufficient =  req.flash('insufficient');
+      const addwatchlist = req.flash('addwatchlist');
+      const alreadywatchlist = req.flash('alreadywatchlist');
+      const bid = req.flash('bid');
       con.query("SELECT * FROM item INNER JOIN user ON item.Seller_Id = user.User_Id WHERE Item_Id = ?", [id], (err, result) => {
         if (err) throw err;
         const filePath = "public/smart_contract_address/" + id + ".txt";
@@ -584,9 +631,10 @@ router
                       }
                     );
                   }
-                } else {
-                  console.log("Payment Already done");
-                }
+                } 
+                // else {
+                //   console.log("Payment Already done");
+                // }
               } else if (now <= end_time && now >= start_time) {
                 var status = "Active";
                 con.query(
@@ -641,14 +689,15 @@ router
                           // );
                         });
                       });
-                  } else {
-                    console.log(`File '${filePath}' exists.`);
-                  }
+                  } 
+                  // else {
+                    // console.log(`File '${filePath}' exists.`);
+                  // }
                   //end of smart contract deployement
                 });
               }
               // Render the product detail page after updating the status
-              res.render("product_detail", { result: result, result1:result1 });
+              res.render("product_detail", { result: result, result1:result1, lessAmount:lessAmount, notstarted:notstarted, expired:expired, insufficient:insufficient, addwatchlist:addwatchlist, alreadywatchlist:alreadywatchlist, bid:bid});
             }
           );
         } else {
@@ -713,7 +762,8 @@ router
                     if (error) {
                       console.error(error);
                     } else {
-                      alert("Bid is placed successfully");
+                      // alert("Bid is placed successfully");
+                      req.flash('bid', 'true');
                       con.query("SELECT * from bid where item_Id = ? order by bid_ID DESC", [id], (err, result3) => {
                         if (err) throw err;
                         if (result3.length > 0) {
@@ -767,21 +817,28 @@ router
                   });
                 })
                 .on("error", (error) => {
-                  console.error("Bid failed:", error);
-                  alert("Insufficient balance");
+                  // console.error("Bid failed:", error);
+                  // alert("Insufficient balance");
+                  req.flash('insufficient', 'true');
+                  res.redirect("/product_detail/" + id);
                 });
             } else {
-              alert("Enter bigger amount than current amount");
+              req.flash('lessAmount', 'true');
+              res.redirect("/product_detail/" + id);
+              // alert("Enter bigger amount than current amount");
+              
             }
             
           } 
           //end here
           else if (start_time > now) {
-            alert("bidding is Not Started Yet");
+            // alert("bidding is Not Started Yet");
+            req.flash('notstarted', 'true');
             res.redirect("/product_detail/" + id);
             // res.status(200);
           } else {
-            alert("bidding is Expired");
+            // alert("bidding is Expired");
+            req.flash('expired', 'true');
             res.redirect("/product_detail/" + id);
             // res.status(200);
 
@@ -812,11 +869,13 @@ router.route("/addwishlist/:id").post((req, res) => {
 
           con.query(sql, values, (err, result) => {
             if (err) throw err;
-            alert("Added in Watchlist");
+            // alert("Added in Watchlist");
+            req.flash('addwatchlist', 'true');
             res.redirect("/product_detail/" + item_id);
           });
         } else {
-          alert("Already present in watchlist");
+          // alert("Already present in watchlist");
+          req.flash('alreadywatchlist', 'true');
           res.redirect("/product_detail/" + item_id);
         }
       }
@@ -883,7 +942,9 @@ router
           console.error(err);
           res.status(500).send("Error updating profile");
         } else {
-          alert("Profile Updated Sucessfully");
+          // alert("Profile Updated Sucessfully");
+          // const successMessage = req.flash('profile');
+          // req.flash('profile', 'true');
           res.redirect("/logout");
         }
       });

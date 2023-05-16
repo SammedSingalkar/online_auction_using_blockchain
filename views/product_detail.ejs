@@ -27,6 +27,76 @@
     <link rel="stylesheet" type="text/css" href="../public/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="../public/css/menu.css">
     <link rel="stylesheet" type="text/css" href="../public/css/product_detail.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+     <script type="text/javascript">
+      $(document).ready(function () {
+        if ("<%= lessAmount %>" === "true") {
+          var alertTitle = "Entered Amount is less than current amount"
+          var alertMessage = "Please Enter higer amount than current amount"
+          swal(alertTitle, alertMessage, "error");
+        }
+      })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          if ("<%= notstarted %>" === "true") {
+            var alertTitle = "Auction Not Started yet"
+            var alertMessage = ""
+            swal(alertTitle, alertMessage, "error");
+          }
+        })
+      </script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      if ("<%= expired %>" === "true") {
+        var alertTitle = "Expired"
+        var alertMessage = "Bidding is expired"
+        swal(alertTitle, alertMessage, "error");
+      }
+    })
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ("<%= insufficient %>" === "true") {
+        var alertTitle = "Error"
+        var alertMessage = "Insufficient balance"
+        swal(alertTitle, alertMessage, "error");
+      }
+    })
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ("<%= addwatchlist %>" === "true") {
+        var alertTitle = "Success"
+        var alertMessage = "Item Successfully added to the watchlist"
+        swal(alertTitle, alertMessage, "success");
+      }
+    })
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ("<%= alreadywatchlist %>" === "true") {
+        var alertTitle = "Warning"
+        var alertMessage = "Already Present in Watchlist"
+        swal(alertTitle, alertMessage, "warning");
+      }
+    })
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ("<%= bid %>" === "true") {
+        var alertTitle = "Sucessfull"
+        var alertMessage = "bid Placed Sucessfully"
+        swal(alertTitle, alertMessage, "warning");
+      }
+    })
+  </script>
 </head>
 
 <body>

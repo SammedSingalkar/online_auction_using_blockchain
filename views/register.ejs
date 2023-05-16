@@ -107,6 +107,10 @@
          text-transform: uppercase;
          cursor: pointer;
       }
+      #asterisk {
+      color: red;
+      font-size: 20px;
+    }
    </style>
 </head>
 
@@ -120,7 +124,7 @@
       <form method="post" autocomplete="on" action="/register" enctype="multipart/form-data">
          <!--Name-->
          <div class="box">
-            <label for="firstName" class="fl fontLabel"> Name : </label>
+            <label for="firstName" class="fl fontLabel"> Name<span id="asterisk">&#42;</span></label>
             <div class="new iconBox">
                <i class="fa fa-user" aria-hidden="true"></i>
             </div>
@@ -133,7 +137,7 @@
 
          <!---Email ID---->
          <div class="box">
-            <label for="email" class="fl fontLabel"> Email ID : </label>
+            <label for="email" class="fl fontLabel"> Email ID<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="email" name="email" placeholder="Email Id" class="textBox" required >
@@ -144,7 +148,7 @@
 
          <!---Aadhar Card.------>
          <div class="box">
-            <label for="phone" class="fl fontLabel"> Aadhar Card : </label>
+            <label for="phone" class="fl fontLabel"> Aadhar Card<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="text" required name="aadhar" maxlength="16" placeholder="Enter Your Aadhar Number" class="textBox">
@@ -155,7 +159,7 @@
 
          <!---Phone No.------>
          <div class="box">
-            <label for="phone" class="fl fontLabel">Mobile No. : </label>
+            <label for="phone" class="fl fontLabel">Mobile No<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-phone" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="text" required name="mobile" maxlength="10" placeholder="Enter Your Phone No." class="textBox">
@@ -166,7 +170,7 @@
 
               <!---Date of Birth.------>
               <div class="box">
-               <label for="phone" class="fl fontLabel">Date of Birth : </label>
+               <label for="phone" class="fl fontLabel">Date of Birth<span id="asterisk">&#42;</span></label>
                <div class="fl iconBox"><i class="fa fa-birthday-cake" aria-hidden="true"></i></div>
                <div class="fr">
                   <input type="Date" required name="date"class="textBox">
@@ -177,7 +181,7 @@
 
             <!---Shipping Address.---->
             <div class="box">
-               <label for="phone" class="fl fontLabel">Address : </label>
+               <label for="phone" class="fl fontLabel">Address<span id="asterisk">&#42;</span></label>
                <div class="fl iconBox"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
                <div class="fr">
                   <input type="text" required name="address"placeholder="Enter Your Shipping Addresss." class="textBox">
@@ -190,7 +194,7 @@
 
          <!---Password------>
          <div class="box">
-            <label for="password" class="fl fontLabel"> Password :</label>
+            <label for="password" class="fl fontLabel"> Password<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="Password" required name="password" placeholder="Password" class="textBox">
@@ -201,7 +205,7 @@
 
          <!---Password------>
          <div class="box">
-            <label for="password" class="fl fontLabel"> Acc Address :</label>
+            <label for="password" class="fl fontLabel"> Acc Address<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="Password" required name="account_address" placeholder="Account Address" class="textBox">
@@ -211,7 +215,7 @@
          <!---Password---->
 
          <div class="box">
-            <label for="file" class="fl fontLabel">Profile Image </label>
+            <label for="file" class="fl fontLabel">Profile Img<span id="asterisk">&#42;</span></label>
             <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
             <div class="fr">
                <input type="file" name="profile_img" accept="image/*" class="textBox" required style="color:white;">

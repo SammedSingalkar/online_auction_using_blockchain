@@ -1,0 +1,23 @@
+color
+/* background-color:  #000036; */
+    background-color:  #101046;
+
+style="font-family: sans-serif; font-size: large; font-weight: 700;"
+dark blue - 
+faint blue - 
+
+#242471;
+
+
+ 1) border1 #3e3ec9;
+2) border 2 #6d69f4;
+
+
+button: #4934d3
+
+
+<i
+											class="icon-credit-card"></i>
+
+<i
+											class="icon-wrench"></i>

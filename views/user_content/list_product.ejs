@@ -1,149 +1,177 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>List Product</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../public/css/custom.css">
-    
-    <style>
-      /* Basic styles */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-      }
-      h1 {
-        text-align: center;
-      }
-      form {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        border-radius: 5px;
-      }
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-      }
-      input[type="text"], textarea, input[type="datetime-local"], select {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-        background-color: rgb(255, 255, 255, );
 
-        /* background-color: transparent; */
-      }
+<head>
+  <title>List Product</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../public/css/custom.css">
 
-      
-      ::placeholder{
-        color: black;
-      }
-      input[type="submit"] {
-        background-color: #4CAF50;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      /* Specific styles for the product listing form */
-      .auction-form label[for="product-name"] {
-        margin-top: 20px;
-      }
-      .auction-form label[for="product-description"] {
-        margin-top: 20px;
-      }
-      .auction-form label[for="product-image"] {
-        margin-top: 20px;
-      }
-      .auction-form label[for="starting-price"] {
-        margin-top: 20px;
-      }
-      .auction-form label[for="auction-duration"] {
-        margin-top: 20px;
-      }
-      .auction-form label[for="shipping-cost"] {
-        margin-top: 20px;
-      }
+  <style>
+    /* Basic styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
 
-   .under {
-       display: inline-block;
-   }
-    </style>
-  </head>
-  <body style="background-image: url(../../public/images/other/img6.jpg);">
-    <div class="side">
-      <div id="bo">
-          <div class="under" style="display:inline-block;">
-              <img src="../../public/images/other/logo2.png" alt="" height="60px" width="68px">
-          </div>
-          <div class="under">
-              <a href="/">Easy bid</a>
-          </div>
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="datetime-local"],
+    select {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      background-color: rgb(255, 255, 255, );
+
+      /* background-color: transparent; */
+    }
+
+
+    ::placeholder {
+      color: black;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Specific styles for the product listing form */
+    .auction-form label[for="product-name"] {
+      margin-top: 20px;
+    }
+
+    .auction-form label[for="product-description"] {
+      margin-top: 20px;
+    }
+
+    .auction-form label[for="product-image"] {
+      margin-top: 20px;
+    }
+
+    .auction-form label[for="starting-price"] {
+      margin-top: 20px;
+    }
+
+    .auction-form label[for="auction-duration"] {
+      margin-top: 20px;
+    }
+
+    .auction-form label[for="shipping-cost"] {
+      margin-top: 20px;
+    }
+
+    .under {
+      display: inline-block;
+    }
+
+    #asterisk {
+      color: red;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body style="background-image: url(../../public/images/other/img6.jpg);">
+  <div class="side">
+    <div id="bo">
+      <div class="under" style="display:inline-block;">
+        <img src="../../public/images/other/logo2.png" alt="" height="60px" width="68px">
       </div>
-      <a href="/"><i class="fa fa-home ele" id="non-active">&nbsp;&nbsp;Home</i></a>
+      <div class="under">
+        <a href="/">Easy bid</a>
+      </div>
+    </div>
+    <a href="/"><i class="fa fa-home ele" id="non-active">&nbsp;&nbsp;Home</i></a>
 
-      <h2 style="padding:2vh; margin-top:1vh; color:rgb(241, 42, 11);">User Account</h2>
-      <a href="/profile"><i class="fa fa-user ele" id="non-active">&nbsp;&nbsp;Profile</i></a>
-      <a href="/wishlist"><i class="fa fa-heart-o ele" id="non-active">&nbsp;&nbsp;Wishlist</i></a>
-      <a href="/purchases"><i class="fa fa-money ele" id="non-active">&nbsp;&nbsp;Purchases</i></a>
-      <a href="/bid"><i class="fa fa-gavel ele" id="non-active">&nbsp;&nbsp;Bids</i></a>
-      <a href="/notify"><i class="fa fa-bell ele" id="non-active">&nbsp;&nbsp;Notifications</i></a>
+    <h2 style="padding:2vh; margin-top:1vh; color:rgb(241, 42, 11);">User Account</h2>
+    <a href="/profile"><i class="fa fa-user ele" id="non-active">&nbsp;&nbsp;Profile</i></a>
+    <a href="/wishlist"><i class="fa fa-heart-o ele" id="non-active">&nbsp;&nbsp;Wishlist</i></a>
+    <a href="/purchases"><i class="fa fa-money ele" id="non-active">&nbsp;&nbsp;Purchases</i></a>
+    <a href="/bid"><i class="fa fa-gavel ele" id="non-active">&nbsp;&nbsp;Bids</i></a>
+    <a href="/notify"><i class="fa fa-bell ele" id="non-active">&nbsp;&nbsp;Notifications</i></a>
 
-      <h2 style="padding:2vh; margin-top:2vh; color:rgb(241, 42, 11)">Seller Section</h2>
-      <a href="/list_product"><i class="fa fa-archive ele" id="active">&nbsp;&nbsp; List Your Product</i></a>
-      <a href="/selling_history"><i class="fa fa-handshake-o ele" id="non-active">&nbsp;&nbsp;Selling
-              History</i></a>
+    <h2 style="padding:2vh; margin-top:2vh; color:rgb(241, 42, 11)">Seller Section</h2>
+    <a href="/list_product"><i class="fa fa-archive ele" id="active">&nbsp;&nbsp; List Your Product</i></a>
+    <a href="/selling_history"><i class="fa fa-handshake-o ele" id="non-active">&nbsp;&nbsp;Selling
+        History</i></a>
   </div>
 
-  <section style="padding-left:38vh; padding-top: 4vh;"> 
+
+  <section style="padding-left:38vh; padding-top: 4vh;">
     <h1>List a Product for Auction</h1>
-    <form action="/list_product" method="post" class="auction-form" style="background-color: rgb(255, 255, 255);" enctype="multipart/form-data">
-      <label for="product-name">Product Name:</label>
+    <form action="/list_product" method="post" class="auction-form" style="background-color: rgb(255, 255, 255);"
+      enctype="multipart/form-data">
+      <label for="product-name">Product Name<span id="asterisk">&#42;</span> :</label>
       <input type="text" id="product-name" name="product_name" placeholder="Enter product name" required>
-      
-      <label for="product-description">Product Description:</label>
-      <textarea id="product-description" name="product_description" placeholder="Enter product description" required></textarea>
 
-      <label for="starting-price">Starting Price:</label>
+      <label for="product-description">Product Description<span id="asterisk">&#42;</span> :</label>
+      <textarea id="product-description" name="product_description" placeholder="Enter product description"
+        required></textarea>
+
+      <label for="starting-price">Starting Price<span id="asterisk">&#42;</span> :</label>
       <input type="text" id="starting-price" name="starting_price" placeholder="Enter starting price" required>
-      <span id="starting-price-error" style="color:red;"></span>
+      <span id="starting-price-error" style="color:rgb(247, 247, 2); font-size: larger;"></span>
 
-      <label for="auction-duration">Auction Start Time: </label>
-      <input type="datetime-local" id="auction_start" name="auction_start" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" required>
+      <label for="auction-duration">Auction Start Time<span id="asterisk">&#42;</span> : </label>
+      <input type="datetime-local" id="auction_start" name="auction_start" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"
+        required>
 
-      <label for="auction-duration">Auction end Time:</label>
+      <label for="auction-duration">Auction end Time<span id="asterisk">&#42;</span> :</label>
       <input type="datetime-local" id="auction-end" name="auction_end" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" required>
-      <span id="auction-time-error" style="color:red;"></span>
+      <span id="auction-time-error" style="color:rgb(252, 252, 2); font-size: larger;"></span>
 
-      <label for="auction-duration">Category:</label>
+      <label for="auction-duration">Category<span id="asterisk">&#42;</span> :</label>
       <select name="category" id="category" required>
-        <% result.forEach((element) => { %>
-        <option value="<%=element.Category%>"><%=element.Category%></option>
-        <% }) %>
+        <% result.forEach((element)=> { %>
+          <option value="<%=element.typename%>">
+            <%=element.typename%>
+          </option>
+          <% }) %>
       </select>
+
+
+      <label for="product-image">Product Image 1<span id="asterisk">&#42;</span> :</label>
+      <input type="file" id="product-image1" name="product_image1" accept="image/*" required>
+
+      <label for="product-image">Product Image 2<span id="asterisk">&#42;</span> :</label>
+      <input type="file" id="product-image2" name="product_image2" accept="image/*" required>
       
-
-      <label for="product-image">Product Image 1:</label>
-      <input type="file" id="product-image" name="product_image1" accept="image/*" required>
-
-      <label for="product-image">Product Image 2:</label>
-      <input type="file" id="product-image" name="product_image2" accept="image/*" required>
-
-      <label for="product-image">Product Image 3:</label>
-      <input type="file" id="product-image" name="product_image3" accept="image/*" required>
-
-      <label for="product-image">Product Image 4:</label>
-      <input type="file" id="product-image" name="product_image4" accept="image/*" required>
+      <label for="product-image">Product Image 3<span id="asterisk">&#42;</span> :</label>
+      <input type="file" id="product-image3" name="product_image3" accept="image/*" required>
+      
+      <label for="product-image">Product Image 4<span id="asterisk">&#42;</span> :</label>
+      <input type="file" id="product-image4" name="product_image4" accept="image/*" required>
+      <div id="result" style="color:red;"></div>
 
       <center><input type="submit" value="List Product"></center>
     </form>
@@ -151,52 +179,166 @@
 
   <script>
     const startingPriceInput = document.getElementById("starting-price");
-const startingPriceError = document.getElementById("starting-price-error");
+    const startingPriceError = document.getElementById("starting-price-error");
 
-function validateStartingPrice() {
-  const startingPrice = startingPriceInput.value;
-  if (isNaN(startingPrice) || startingPrice < 0) {
-    startingPriceInput.classList.add("error");
-    startingPriceError.textContent = "Starting price must be a positive number";
-    return false;
-  }
-  startingPriceInput.classList.remove("error");
-  startingPriceError.textContent = "";
-  return true;
-}
-startingPriceInput.addEventListener("input", validateStartingPrice);
+    function validateStartingPrice() {
+      const startingPrice = startingPriceInput.value;
+      if (isNaN(startingPrice) || startingPrice < 0) {
+        startingPriceInput.classList.add("error");
+        startingPriceError.textContent = "Starting price must be a positive number";
+        return false;
+      }
+      startingPriceInput.classList.remove("error");
+      startingPriceError.textContent = "";
+      return true;
+    }
+    startingPriceInput.addEventListener("input", validateStartingPrice);
   </script>
 
   <script>
     const auctionStartInput = document.getElementById("auction_start");
-const auctionEndInput = document.getElementById("auction-end");
-const auctionTimeError = document.getElementById("auction-time-error");
+    const auctionEndInput = document.getElementById("auction-end");
+    const auctionTimeError = document.getElementById("auction-time-error");
 
-function validateAuctionTime() {
-  const auctionStartTime = new Date(auctionStartInput.value).getTime();
-  const auctionEndTime = new Date(auctionEndInput.value).getTime();
-  const now = Date.now();
-  
-  if (auctionStartTime >= auctionEndTime) {
-    auctionStartInput.classList.add("error");
-    auctionEndInput.classList.add("error");
-    auctionTimeError.textContent = "Auction end time must be after auction start time";
-    return false;
+    function validateAuctionTime() {
+      const auctionStartTime = new Date(auctionStartInput.value).getTime();
+      const auctionEndTime = new Date(auctionEndInput.value).getTime();
+      const now = Date.now();
+
+      if (auctionStartTime >= auctionEndTime) {
+        auctionStartInput.classList.add("error");
+        auctionEndInput.classList.add("error");
+        auctionTimeError.textContent = "Auction end time must be after auction start time";
+        return false;
+      }
+      if (auctionStartTime <= now) {
+        auctionStartInput.classList.add("error");
+        auctionEndInput.classList.add("error");
+        auctionTimeError.textContent = "Warning: Auction start time must be in the future";
+        return false;
+      }
+      auctionStartInput.classList.remove("error");
+      auctionEndInput.classList.remove("error");
+      auctionTimeError.textContent = "";
+      return true;
+    }
+
+    auctionStartInput.addEventListener("input", validateAuctionTime);
+    auctionEndInput.addEventListener("input", validateAuctionTime);
+
+  </script>
+
+<script>
+
+
+function compareImages(image1, image2) {
+  // Get the two canvas elements.
+  var canvas1 = document.createElement("canvas");
+  var canvas2 = document.createElement("canvas");
+
+  // Create image objects from the uploaded files.
+  var img1 = new Image();
+  img1.src = image1;
+
+  var img2 = new Image();
+  img2.src = image2;
+
+  // Draw the two images onto the canvas elements once they are loaded.
+  img1.onload = function() {
+    canvas1.width = img1.width;
+    canvas1.height = img1.height;
+    canvas1.getContext("2d").drawImage(img1, 0, 0);
   }
-  if (auctionStartTime <= now) {
-    auctionStartInput.classList.add("error");
-    auctionEndInput.classList.add("error");
-    auctionTimeError.textContent = "Auction start time must be in the future";
-    return false;
-  }
-  auctionStartInput.classList.remove("error");
-  auctionEndInput.classList.remove("error");
-  auctionTimeError.textContent = "";
-  return true;
+
+  img2.onload = function() {
+    canvas2.width = img2.width;
+    canvas2.height = img2.height;
+    canvas2.getContext("2d").drawImage(img2, 0, 0);
+
+    // Get the pixel data from the two canvas elements.
+    var pixels1 = canvas1.getContext("2d").getImageData(0, 0, canvas1.width, canvas1.height);
+    var pixels2 = canvas2.getContext("2d").getImageData(0, 0, canvas2.width, canvas2.height);
+
+    // Compare the pixel data from the two canvas elements.
+    var isSimilar = true;
+    for (var i = 0; i < pixels1.data.length; i += 4) {
+      var red1 = pixels1.data[i];
+      var green1 = pixels1.data[i + 1];
+      var blue1 = pixels1.data[i + 2];
+      var alpha1 = pixels1.data[i + 3];
+
+      var red2 = pixels2.data[i];
+      var green2 = pixels2.data[i + 1];
+      var blue2 = pixels2.data[i + 2];
+      var alpha2 = pixels2.data[i + 3];
+
+      if (red1 !== red2 || green1 !== green2 || blue1 !== blue2 || alpha1 !== alpha2) {
+        isSimilar = false;
+        break;
+      }
+    }
+
+    // Update the result element with the similarity result.
+    document.getElementById("result").innerHTML = isSimilar ? "The images are similar." : "The images are not similar.";
+  };
 }
 
-auctionStartInput.addEventListener("input", validateAuctionTime);
-auctionEndInput.addEventListener("input", validateAuctionTime);
+// Attach onchange event listeners to the input elements.
+var productImage1 = document.getElementById("product-image1");
+var productImage2 = document.getElementById("product-image2");
+var productImage3 = document.getElementById("product-image3");
+var productImage4 = document.getElementById("product-image4");
+
+productImage1.addEventListener("change", function() {
+  if (productImage1.files.length > 0 && productImage2.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage2.files[0]));
+  }
+  if (productImage1.files.length > 0 && productImage3.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage3.files[0]));
+  }
+  if (productImage1.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+});
+
+productImage2.addEventListener("change", function() {
+  if (productImage1.files.length > 0 && productImage2.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage2.files[0]));
+  }
+  if (productImage2.files.length > 0 && productImage3.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage2.files[0]), URL.createObjectURL(productImage3.files[0]));
+  }
+  if (productImage2.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage2.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+});
+
+productImage3.addEventListener("change", function() {
+  if (productImage1.files.length > 0 && productImage3.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage3.files[0]));
+  }
+  if (productImage2.files.length > 0 && productImage3.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage2.files[0]), URL.createObjectURL(productImage3.files[0]));
+  }
+  if (productImage3.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage3.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+});
+
+productImage4.addEventListener("change", function() {
+  if (productImage1.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage1.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+  if (productImage2.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage2.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+  if (productImage3.files.length > 0 && productImage4.files.length > 0) {
+    compareImages(URL.createObjectURL(productImage3.files[0]), URL.createObjectURL(productImage4.files[0]));
+  }
+});
+
   </script>
-  </body>
+  
+</body>
+
 </html>
