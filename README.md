@@ -1,5 +1,4 @@
-# online_auction_using_blockchain
-Online Auction Project
+              Online Auction Project
 This project is an online auction system built using blockchain technology. It allows users to buy and sell items through an auction mechanism, ensuring transparency and security through the use of smart contracts.
 
 Table of Contents
@@ -9,13 +8,18 @@ Usage
 Technologies
 Contributing
 License
+
+
 Features
-User registration and authentication
-Create, update, and delete auction listings
-Place bids on auction items
-Automatic bidding system
-Real-time updates on bid activity
-Secure transactions through smart contracts
+
+* User registration and authentication
+* Create, and delete auction listings
+* Place bids on auction items
+* Automatic bidding system
+* Real-time updates on bid activity
+* Secure transactions through smart contracts
+
+
 Installation
 To run the online auction project locally, follow these steps:
 

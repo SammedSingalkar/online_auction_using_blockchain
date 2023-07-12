@@ -1,11 +1,6 @@
 const express = require("express");
-const path = require("path");
-const ejs = require("ejs");
-var bodyParser = require("body-parser");
 var mysql = require("mysql");
 const session = require("express-session");
-const nodemailer = require("nodemailer");
-let alert = require("alert");
 const fs = require("fs");
 const solc = require("solc");
 const fileUpload = require("express-fileupload");
@@ -25,7 +20,6 @@ const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
 // const web3 = Contract.setProvider('https://sepolia.infura.io/v3/7dc1dad5e7174ab7886f46499f10da4d');
 
 var router = express.Router();
-
 var app = express();
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
@@ -57,14 +51,9 @@ router.use(
     cookie: {
       secure: false,
       maxAge: 360000000,
-    }, // Session expires in 100 hour
+    },
   })
 );
-
-// app.use(function(req, res, next) {
-//   res.locals.Swal = require('sweetalert2');
-//   next();
-// });
 
 
 router
@@ -88,17 +77,7 @@ router
     const sql = `INSERT INTO user (Name, Email, Aadhar_Card, Mobile_No, DOB, User_Id, Password, Shipping_Add, accound_address) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    const values = [
-      name,
-      email,
-      aadhar,
-      mobile,
-      dob,
-      userid,
-      password,
-      address,
-      acc_address,
-    ];
+    const values = [name, email, aadhar, mobile, dob, userid, password, address, acc_address, ];
 
     const folderPath = `public/images/user`;
 
@@ -107,7 +86,6 @@ router
 
     con.query(sql, values, (err, result) => {
       if (err) throw err;
-      // alert("Data inserted successfully");
       req.flash('success', 'true');
       res.redirect("/signin");
     });
@@ -402,12 +380,6 @@ router.route("/notify/:id").post((req, res) => {
     [id],
     (err, result) => {
       if (err) throw err;
-      // alert("Deleted Successfullt");
-      // notifier.notify({
-      //   title: 'Notification',
-      //   message: 'Notification deleted successfully!',
-      //   icon: 'public/images/delete.png'
-      // });
       res.redirect("/notify");
     }
   );
@@ -684,16 +656,9 @@ router
                             console.error(err);
                             return;
                           }
-                          // console.log(
-                          //   "File created and content written successfully!"
-                          // );
                         });
                       });
                   } 
-                  // else {
-                    // console.log(`File '${filePath}' exists.`);
-                  // }
-                  //end of smart contract deployement
                 });
               }
               // Render the product detail page after updating the status
